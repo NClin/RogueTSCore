@@ -38,6 +38,7 @@ public class MapOccupiedInfo : MonoBehaviour
     public bool IsOccupied(Vector2Int tile)
     {
         return occupied[tile.x, tile.y];
+        Debug.Log("test");
     }
 
     public List<Vector2Int> GetAllBlockedTiles()
