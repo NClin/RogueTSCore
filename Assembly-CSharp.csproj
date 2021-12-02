@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
     <Compile Include="Assets\Scripts\Unit Components\MoveableUnit.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\AILerpEdited.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

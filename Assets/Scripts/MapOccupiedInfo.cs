@@ -13,8 +13,8 @@ public class MapOccupiedInfo : MonoBehaviour
     public void Start()
     {
         // placeholders until map generation can set these.
-        width = 100;
-        height = 100;
+        width = 5;
+        height = 5;
 
         occupied = new bool[height, width];
         for (int x = 0; x < width; x++)

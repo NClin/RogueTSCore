@@ -11,6 +11,8 @@ public class MoveableUnit : MonoBehaviour
     private Vector3 previousStepVector;
     private Vector3 stepVector;
     private float t;
+    private bool arrivedAtNextTile;
+    private bool queuedMoveOrder = false;
 
     private float moveSpeed;
     public float MoveSpeed 
@@ -65,6 +67,22 @@ public class MoveableUnit : MonoBehaviour
         MoveSpeed = 5; // Testing, to be set by unit spawner.
     }
 
+    IEnumerator ArrivedAtNextTileChecker()
+    {
+        arrivedAtNextTile = false;
+        while (arrivedAtNextTile == false)
+        {
+            if (ArrivedAtVector3(stepVector))
+            {
+                arrivedAtNextTile = true;
+            }
+            else
+            {
+                yield return null;
+            }
+        }
+    }
+
     IEnumerator Initialize()
     {
         yield return new WaitForEndOfFrame(); // Allows pathfinding graph scan to complete.
@@ -91,44 +109,69 @@ public class MoveableUnit : MonoBehaviour
             StartCoroutine(Initialize());
             return;
         }
+        VerifyOccupiesTile();
+
     }
 
     public void MoveTo(Vector2 destination)
     {
-        Debug.Log($"MoveTo {destination}");
+        Debug.Log("hi");
+        if (isMoving)
+        {
+            queuedMoveOrder = true;
+        }
+        StartCoroutine(MoveToCoroutine(destination));
+    }
+
+    public IEnumerator MoveToCoroutine(Vector2 destination)
+    {
+        // StartCoroutine(ArrivedAtNextTileChecker());
+
+            while (queuedMoveOrder == true)
+            {
+                yield return null;
+            }
+
         SetPath(destination);
+    }
+
+    private void VerifyOccupiesTile()
+    {
+
+        if (occupiedTile == null)
+        {
+            OccupyClosestTile(ClosestTileCoordinatesV3(transform.position));
+        }
+        mapOccupiedInfo.Occupy(occupiedTile);
+
+        Debug.Log(mapOccupiedInfo.IsOccupied(occupiedTile));
     }
 
     private void StartMoving()
     {
-        Debug.Log("StartMoving");
-        Debug.Log($"Startmoving MoveAlongPathCoroutine is now = {MoveAlongPathCoroutine}");
+
 
         if (MoveAlongPathCoroutine != null)
         {
-            Debug.Log("StartMoving");
             StopCoroutine(MoveAlongPathCoroutine);
         }
         MoveAlongPathCoroutine = StartCoroutine(MoveAlongPath());
         isMoving = true;
-        Debug.Log($"After Startmoving MoveAlongPathCoroutine is now = {MoveAlongPathCoroutine}");
     }
 
     private void StopMoving()
     {
-        Debug.Log("StopMoving");
         if (MoveAlongPathCoroutine != null)
         {
             StopCoroutine(MoveAlongPathCoroutine);
-            Debug.Log($"Stopped MoveAlongPathCoroutine now = {MoveAlongPathCoroutine}");
         }
+        queuedMoveOrder = false;
         isMoving = false;
     }
 
     // This method will be called by the selection and orders system for player units, or by the AI controller for AI units.
     private void SetPath(Vector2 destination)
     {
-        Debug.Log($"setting path to {destination}");
         if (ArrivedAtVector3(destination))
         {
             OnPathComplete();
@@ -160,6 +203,7 @@ public class MoveableUnit : MonoBehaviour
 
     private void ProcessAndSetPathAvoidingOccupied(Path p)
     {
+
         List<Vector2Int> blockedNodes = new List<Vector2Int>();
 
         foreach (Vector3 node in p.vectorPath)
@@ -199,12 +243,13 @@ public class MoveableUnit : MonoBehaviour
             path = p;
             currentPathStep = 0;
 
-            //// hack
-            if (path.vectorPath[0] == path.vectorPath[1])
-            {
-                path.vectorPath.RemoveAt(0);
-            }
-            //// hack end.
+            ////// hack
+            //if (path.vectorPath[0] == path.vectorPath[1])
+            //{
+            //    path.vectorPath.RemoveAt(0);
+            //}
+            ////// hack end.
+            /////
 
 
             StartMoving();
@@ -212,7 +257,7 @@ public class MoveableUnit : MonoBehaviour
         else { Debug.Log($"Path error: {p.error}"); }
     }
 
-    private bool PathComplete()
+    private bool IsPathComplete()
     {
         if (currentPathStep >= path.vectorPath.Count) return true;
         else return false;
@@ -229,12 +274,11 @@ public class MoveableUnit : MonoBehaviour
 
     private IEnumerator MoveAlongPath()
     {
-        while (!PathComplete())
+        while (!IsPathComplete())
         {
 
             if (!initialized)
             {
-                Debug.Log("yielding break");
                 yield break;
             }
 
@@ -245,19 +289,26 @@ public class MoveableUnit : MonoBehaviour
             {
                 t = 0;                                                              // we are now at a zero point in our lerp
                 previousStepVector = stepVector;                                    // new is old
+
+                if (queuedMoveOrder)
+                {
+                    queuedMoveOrder = false;
+                    StopMoving();
+                    yield break;
+                }
+
                 currentPathStep++;                                                  // time for next step
 
-                if (PathComplete())                                                 // check if new step is final step
+                if (IsPathComplete())                                                 // check if new step is final step
                 {
                     OnPathComplete();
-
-                    Debug.Log("yielding break");
                     yield break;
                 }
 
                 stepVector = path.vectorPath[currentPathStep];                      // set that new step
 
             }
+
 
             //stuck logic
             if (mapOccupiedInfo.IsOccupied(ClosestTileCoordinates(stepVector))      // If next tile is occupied
@@ -266,21 +317,23 @@ public class MoveableUnit : MonoBehaviour
             {
                 if (currentStuckFrames < maxStuckFrames)                            // If we haven't tried already the max times.
                 {
+                    Debug.Log("we stuck");
                     currentStuckFrames++;                                           // Count our tries
-                    Debug.Log("yielding");
-                    seeker.StartPath(transform.position, moveTarget.position, ProcessAndSetPathAvoidingOccupied); // Recalculate path avoiding occupied
+                    seeker.StartPath(ClosestTileCoordinatesV3(transform.position), moveTarget.position, ProcessAndSetPathAvoidingOccupied); // Recalculate path avoiding occupied
                     yield return null;                                              // and try again next frame.
                 }
+                else
+                {
+                    StopMoving();
+                    yield break;
+                }
             }
-            // Work from here
 
             OccupyClosestTile(stepVector);          // No problems, occupy next tile
 
             t += Time.deltaTime;                       // Update time
             transform.position = Vector3.Lerp(previousStepVector, stepVector, moveSpeed * t);           // Move.
 
-
-            Debug.Log("yielding");
             yield return null;
         }
 
@@ -288,6 +341,7 @@ public class MoveableUnit : MonoBehaviour
 
     void BlockNode(Vector2Int tileToAvoid)
     {
+        Debug.Log($"blocking {tileToAvoid}");
         var tileVector3 = new Vector3(tileToAvoid.x, tileToAvoid.y, 0);
         var nodeToBlock = AstarPath.active.GetNearest(tileVector3).node;
         var guo = new GraphUpdateObject();
@@ -364,6 +418,11 @@ public class MoveableUnit : MonoBehaviour
     private Vector2Int ClosestTileCoordinates(Vector3 position)
     {
         return new Vector2Int(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y));
+    }
+
+    private Vector3 ClosestTileCoordinatesV3(Vector3 position)
+    {
+        return new Vector3(Mathf.RoundToInt(position.x), Mathf.RoundToInt(position.y), 0);
     }
 
     private void OccupyClosestTile(Vector3 mapTile)

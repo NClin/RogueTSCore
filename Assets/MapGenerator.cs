@@ -19,8 +19,8 @@ public class MapGenerator : MonoBehaviour
     float offsetX = 0.5f;
     float offsetY = 0.5f;
 
-    int width = 50;
-    int height = 50;
+    int width = 6;
+    int height = 6;
 
     // Start is called before the first frame update
     void Awake()
@@ -40,7 +40,7 @@ public class MapGenerator : MonoBehaviour
 
         if (!scanned)
         {
-            AstarPath.active.data.gridGraph.SetDimensions(50, 50, 1f);
+            AstarPath.active.data.gridGraph.SetDimensions(width, height, 1f);
             var center = new Vector3(width / 2 - offsetX, height / 2 - offsetY, 0);
             AstarPath.active.data.gridGraph.center = center;
             AstarPath.active.Scan();
