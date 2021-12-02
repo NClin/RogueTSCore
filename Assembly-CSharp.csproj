@@ -56,19 +56,19 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Powers\Teleport.cs" />
     <Compile Include="Assets\MapGenerator.cs" />
+    <Compile Include="Assets\SpawnUnit.cs" />
     <Compile Include="Assets\Scripts\Unit Components\SelectableUnit.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\BlockOccupiedNode.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
     <Compile Include="Assets\Scripts\MapOccupiedInfo.cs" />
+    <Compile Include="Assets\Scripts\Powers\IPower.cs" />
     <Compile Include="Assets\Scripts\Unit Components\MoveableUnit.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\Scripts\Powers\Teleport.cs" />
-    <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
-    <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
-    <Compile Include="Assets\Scripts\Powers\IPower.cs" />
-    <Compile Include="Assets\SpawnUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

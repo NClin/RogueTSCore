@@ -40,13 +40,13 @@ public class MoveableUnit : MonoBehaviour
     private const float maxStuckTime = 0.5f;
     private float stuckCompletionDistanceThreshold = 2f; // Idea: If many units selected when move order given, increase this value on moved units to avoid infinite searching.
     private const float stuckCompletionDistanceThresholdBase = 2f;
-    private const int maxStuckIterations = 5;
-    private int stuckIterations = 0;
+    private const int maxStuckFrames = 5;
+    private int currentStuckFrames = 0;
     private const float unstickerCheckInterval = 1;
     private bool needsUnsticking = false;
     private const int maxUnstickAttempts = 4;
     private int unstickAttempts = 0;
-    private Coroutine unsticker;
+    private Coroutine MoveAlongPathCoroutine;
 
     // MoveTargetObject is an empty object to be instantiated as a transform to be used by the pathfinding system.
     [SerializeField]
@@ -79,7 +79,7 @@ public class MoveableUnit : MonoBehaviour
         TeleportTo(ClosestTileCoordinates(transform.position));
         stepVector = transform.position;
         previousStepVector = transform.position;
-        SetMoveTarget(transform.position);
+        SetPath(transform.position);
         OccupyClosestTile(transform.position);
         initialized = true;
     }
@@ -89,49 +89,76 @@ public class MoveableUnit : MonoBehaviour
         if (!initialized)
         {
             StartCoroutine(Initialize());
-        }
-
-        VerifyOccupiesTile();
-        if (isMoving)
-        { TakeStepOnPath(); }
-    }
-
-
-    // This method will be called by the selection and orders system for player units, or by the AI controller for AI units.
-    public void SetMoveTarget(Vector2 destination)
-    {
-        moveTarget.transform.position = destination;
-        if(ArrivedAtVector3(destination))
-        {
             return;
         }
-        SetPathAvoidingObstacles();
     }
 
-    private IEnumerator Unsticker()
+    public void MoveTo(Vector2 destination)
     {
-        SetPathAvoidingObstacles();
-        if (stuck & unstickAttempts < maxUnstickAttempts)
+        Debug.Log($"MoveTo {destination}");
+        SetPath(destination);
+    }
+
+    private void StartMoving()
+    {
+        Debug.Log("StartMoving");
+        Debug.Log($"Startmoving MoveAlongPathCoroutine is now = {MoveAlongPathCoroutine}");
+
+        if (MoveAlongPathCoroutine != null)
         {
-            stuckCompletionDistanceThreshold++;
-            unstickAttempts++;
-            yield return new WaitForSeconds(unstickerCheckInterval);
+            Debug.Log("StartMoving");
+            StopCoroutine(MoveAlongPathCoroutine);
         }
-        stuckCompletionDistanceThreshold = stuckCompletionDistanceThresholdBase;
-        unstickAttempts = 0;
+        MoveAlongPathCoroutine = StartCoroutine(MoveAlongPath());
+        isMoving = true;
+        Debug.Log($"After Startmoving MoveAlongPathCoroutine is now = {MoveAlongPathCoroutine}");
     }
 
-    public void SetPathToMoveTarget()
+    private void StopMoving()
     {
-        seeker.StartPath(transform.position, moveTarget.position, MoveAlongPath);
+        Debug.Log("StopMoving");
+        if (MoveAlongPathCoroutine != null)
+        {
+            StopCoroutine(MoveAlongPathCoroutine);
+            Debug.Log($"Stopped MoveAlongPathCoroutine now = {MoveAlongPathCoroutine}");
+        }
+        isMoving = false;
     }
 
-    public void SetPathAvoidingObstacles()
+    // This method will be called by the selection and orders system for player units, or by the AI controller for AI units.
+    private void SetPath(Vector2 destination)
     {
-        seeker.StartPath(transform.position, moveTarget.position, GetPathAvoidingOccupiedTest);
+        Debug.Log($"setting path to {destination}");
+        if (ArrivedAtVector3(destination))
+        {
+            OnPathComplete();
+            return;
+        }
+        else
+        {
+            SetPathAvoidingOccupied(destination);
+        }
     }
 
-    private void GetPathAvoidingOccupiedTest(Path p)
+    private void SetMoveTarget(Vector2 destination)
+    {
+        moveTarget.transform.position = destination;
+    }
+
+    public void SetDirectPathToMoveTarget()
+    {
+        seeker.StartPath(transform.position, moveTarget.position, SetPathAndMove);
+    }
+
+    private void SetPathAvoidingOccupied(Vector2 destination)
+    {
+        SetMoveTarget(destination);
+        // Callback sets path returned by seeker to current path.
+        seeker.StartPath(transform.position, moveTarget.position, ProcessAndSetPathAvoidingOccupied);
+    }
+
+
+    private void ProcessAndSetPathAvoidingOccupied(Path p)
     {
         List<Vector2Int> blockedNodes = new List<Vector2Int>();
 
@@ -148,36 +175,7 @@ public class MoveableUnit : MonoBehaviour
             }
         }
 
-        seeker.StartPath(transform.position, moveTarget.position, MoveAlongPath);
-
-
-        if (blockedNodes.Count != 0)
-        {
-            foreach (Vector2Int blocked in blockedNodes)
-            {
-                UnblockNode(blocked);
-            }
-        }
-    }
-
-    private IEnumerator GetPathAvoidingOccupied()
-    {
-        Debug.Log($"new coroutine");
-        List<Vector2Int> blockedNodes = new List<Vector2Int>();
-
-        if (path == null) SetPathToMoveTarget();
-
-        foreach (Vector3 node in path.vectorPath)
-        {
-            var vec2 = ClosestTileCoordinates(node);
-            if (mapOccupiedInfo.IsOccupied(vec2))
-            {
-                BlockNode(vec2);
-                blockedNodes.Add(vec2);
-            }
-        }
-
-        yield return seeker.StartPath(transform.position, moveTarget.position, MoveAlongPath);
+        seeker.StartPath(transform.position, moveTarget.position, SetPathAndMove);
 
         if (blockedNodes.Count != 0)
         {
@@ -190,28 +188,33 @@ public class MoveableUnit : MonoBehaviour
 
     private void OnPathComplete()
     {
-        SetMoveTarget(transform.position);
-        isMoving = false;
-        stuck = false;
-
+        StopMoving();
     }
 
-    public void MoveAlongPath(Path p)
+    public void SetPathAndMove(Path p)
     {
         if (p.error == false)
         {
+
             path = p;
             currentPathStep = 0;
-            isMoving = true;
+
+            //// hack
+            if (path.vectorPath[0] == path.vectorPath[1])
+            {
+                path.vectorPath.RemoveAt(0);
+            }
+            //// hack end.
+
+
+            StartMoving();
         }
         else { Debug.Log($"Path error: {p.error}"); }
     }
 
     private bool PathComplete()
     {
-        if (path == null) { return true; }
-        if (currentPathStep > path.vectorPath.Count) { return true; }    // out of range somehow. Stop.
-        if (currentPathStep == path.vectorPath.Count) { return true; } // path complete;
+        if (currentPathStep >= path.vectorPath.Count) return true;
         else return false;
     }
 
@@ -219,121 +222,67 @@ public class MoveableUnit : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, vector) < arrivalThreshold)
         {
-            t = 0;
             return true;
         }
         else { return false; }
     }
 
-    private void BeginStuckTimer()
+    private IEnumerator MoveAlongPath()
     {
-        stuck = true;
-        stuckTime = 0;
-    }
-
-    private void VerifyOccupiesTile()
-    {
-        if (occupiedTile == null)
+        while (!PathComplete())
         {
-            OccupyClosestTile(transform.position);
-        }
-    }
-    private void IncrementStuckTimer()
-    {
-        if (stuck)
-        {
-            stuckTime += Time.deltaTime;
-        }
-    }
 
-    private void NoLongerStuck()
-    {
-        stuck = false;
-        stuckTime = 0;
-        stuckIterations = 0;
-    }
-
-    private void TakeStepOnPath()
-    {
-        if (PathComplete())
-        {
-            OnPathComplete(); 
-            return;
-        }
-
-        if (stepVector == null)
-        {
-            previousStepVector = transform.position;
-        }
-        
-
-        stepVector = path.vectorPath[currentPathStep];
-
-        if (mapOccupiedInfo.IsOccupied(ClosestTileCoordinates(stepVector)))
-        {
-            if (occupiedTile != ClosestTileCoordinates(stepVector))
+            if (!initialized)
             {
-                if (!stuck) BeginStuckTimer();
-                if (CloseEnough(moveTarget.transform.position)) 
-                {
-                    stuck = false;
-                    OnPathComplete(); 
-                    return; 
-                }
-                if (stuckIterations < maxStuckIterations)
-                {
-                    if (stuck) IncrementStuckTimer();
-                    if (stuckTime > maxStuckTime)
-                    {
-                        needsUnsticking = true;
-                        if (unsticker == null)
-                        {
-                            Debug.Log("starting unstuck coroutine");
-                            unsticker = StartCoroutine(Unsticker());
-                        }
-                        return;
-
-                        //Debug.Log("I give up");
-                        //SetMoveTarget(transform.position);
-                        //stuckIterations = 0;
-                        //OnPathComplete();
-                        //return;
-                    }
-                    GetPathAvoidingAllOccupiedTiles();
-                    stuckIterations++;
-                    NoLongerStuck();
-                    return;
-                }
-                return; 
+                Debug.Log("yielding break");
+                yield break;
             }
-        }
 
-        OccupyClosestTile(stepVector);
+            stepVector = path.vectorPath[currentPathStep];
 
-        //var dir = (stepVector - transform.position).normalized;           // depreciated.
-        //transform.position += dir * moveSpeed * Time.deltaTime;
-
-        t += Time.deltaTime;
-        transform.position = Vector3.Lerp(previousStepVector, stepVector, moveSpeed * t);
-
-        if (ArrivedAtVector3(stepVector))
-        {
-            previousStepVector = stepVector;
-            currentPathStep++;
-            if (PathComplete())
+            //arrived logic
+            if (ArrivedAtVector3(stepVector))                                       // If we have arrived
             {
-                OnPathComplete(); return;
-            }
-            else
-            {
-                var nextStepVector = path.vectorPath[currentPathStep];
-                if (!mapOccupiedInfo.IsOccupied(ClosestTileCoordinates(nextStepVector)))
+                t = 0;                                                              // we are now at a zero point in our lerp
+                previousStepVector = stepVector;                                    // new is old
+                currentPathStep++;                                                  // time for next step
+
+                if (PathComplete())                                                 // check if new step is final step
                 {
-                    OccupyClosestTile(nextStepVector);
+                    OnPathComplete();
+
+                    Debug.Log("yielding break");
+                    yield break;
+                }
+
+                stepVector = path.vectorPath[currentPathStep];                      // set that new step
+
+            }
+
+            //stuck logic
+            if (mapOccupiedInfo.IsOccupied(ClosestTileCoordinates(stepVector))      // If next tile is occupied
+                && occupiedTile != ClosestTileCoordinates(stepVector)               // And occupier is not this unit.
+                && !CloseEnough(moveTarget.transform.position))                     // And we're not close enough to call it a day.
+            {
+                if (currentStuckFrames < maxStuckFrames)                            // If we haven't tried already the max times.
+                {
+                    currentStuckFrames++;                                           // Count our tries
+                    Debug.Log("yielding");
+                    seeker.StartPath(transform.position, moveTarget.position, ProcessAndSetPathAvoidingOccupied); // Recalculate path avoiding occupied
+                    yield return null;                                              // and try again next frame.
                 }
             }
-        }
+            // Work from here
 
+            OccupyClosestTile(stepVector);          // No problems, occupy next tile
+
+            t += Time.deltaTime;                       // Update time
+            transform.position = Vector3.Lerp(previousStepVector, stepVector, moveSpeed * t);           // Move.
+
+
+            Debug.Log("yielding");
+            yield return null;
+        }
 
     }
 
@@ -390,7 +339,7 @@ public class MoveableUnit : MonoBehaviour
     private void GetPathAvoidingTile(Vector2Int tileToAvoid)
     {
         BlockNode(tileToAvoid);
-        SetPathToMoveTarget();
+        SetDirectPathToMoveTarget();
         UnblockNode(tileToAvoid);
     }
 
@@ -403,7 +352,7 @@ public class MoveableUnit : MonoBehaviour
             BlockNode(blockedTile);
         }
         
-        SetPathToMoveTarget();
+        SetDirectPathToMoveTarget();
 
         foreach (Vector2Int blockedTile in toAvoid)
         {

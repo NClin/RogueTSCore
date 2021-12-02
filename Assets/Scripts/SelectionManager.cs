@@ -89,7 +89,7 @@ public class SelectionManager : MonoBehaviour
                 {
                     if (unit.GetComponent<MoveableUnit>())
                     {
-                        unit.GetComponent<MoveableUnit>().SetMoveTarget(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                        unit.GetComponent<MoveableUnit>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     }
                 }
             }
