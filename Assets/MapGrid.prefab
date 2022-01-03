@@ -1194,3 +1194,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab00ebda3b5b31468418707a26d6d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wallTile: {fileID: 11400000, guid: 7041cef4cbdbce2499537a5b05287235, type: 2}
+  groundTile: {fileID: 11400000, guid: ae5229735f868944bbdd811a421a783f, type: 2}

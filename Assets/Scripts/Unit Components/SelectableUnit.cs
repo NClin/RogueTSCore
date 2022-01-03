@@ -2,20 +2,21 @@ using UnityEngine;
 public class SelectableUnit : MonoBehaviour
 {
     public bool selected = false;
-
-    // Implement selection sprite and highlighting here.
-
+    [SerializeField]
+    private GameObject selectedIndicator;
 
     void Update()
     {
         if (selected)
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            selectedIndicator.SetActive(true);
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.white;
+            if (selectedIndicator.activeInHierarchy)
+            {
+                selectedIndicator.SetActive(false);
+            } 
         }
     }
-
 }

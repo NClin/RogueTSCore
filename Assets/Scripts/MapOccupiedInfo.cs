@@ -9,12 +9,11 @@ public class MapOccupiedInfo : MonoBehaviour
     private int width, height;
     private bool[,] occupied;
 
-    // Start is called before the first frame update
-    public void Start()
+    public void Awake()
     {
         // placeholders until map generation can set these.
-        width = 5;
-        height = 5;
+        width = 25;
+        height = 25;
 
         occupied = new bool[height, width];
         for (int x = 0; x < width; x++)
@@ -38,7 +37,6 @@ public class MapOccupiedInfo : MonoBehaviour
     public bool IsOccupied(Vector2Int tile)
     {
         return occupied[tile.x, tile.y];
-        Debug.Log("test");
     }
 
     public List<Vector2Int> GetAllBlockedTiles()

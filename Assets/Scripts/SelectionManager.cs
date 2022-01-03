@@ -87,9 +87,9 @@ public class SelectionManager : MonoBehaviour
             {
                 foreach (SelectableUnit unit in selectedUnits)
                 {
-                    if (unit.GetComponent<MoveableUnit>())
+                    if (unit.GetComponent<Movement>())
                     {
-                        unit.GetComponent<MoveableUnit>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                        unit.GetComponent<Movement>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                     }
                 }
             }
