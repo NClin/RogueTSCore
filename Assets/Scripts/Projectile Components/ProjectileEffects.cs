@@ -9,7 +9,7 @@ public class ProjectileEffects : MonoBehaviour
     public void DoEffects(GameObject affected)
     {
         Debug.Log("Hit!");
-        affected.GetComponent<UnitInfo>().health -= damage;
+        affected.GetComponent<Unit>().TakeDamage(damage);
         Destroy(gameObject);
     }
 

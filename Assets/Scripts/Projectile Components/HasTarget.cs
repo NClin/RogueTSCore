@@ -4,7 +4,19 @@ using UnityEngine;
 
 public class HasTarget : MonoBehaviour
 {
+    /// <summary>
+    /// Targeting module should be liberal about clearing this. Only have a target while attacking.
+    /// </summary>
+    public GameObject? target;
 
-    public GameObject target;
+    public bool hasTargetTrue()
+    {
+        if (target != null)
+        {
+            return true;
+        }
+        
+        return false;
+    }
 
 }

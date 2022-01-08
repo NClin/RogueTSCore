@@ -5,13 +5,12 @@ using Pathfinding;
 
 public class Movement : MonoBehaviour
 {
-
     public float moveSpeed;
 
-    bool initialized;
+    bool initialized = false;
     Coroutine initializer;
 
-    MapOccupiedInfo _mapOccupiedInfo;
+    MapOccupiedInfoSingleton _mapOccupiedInfo;
     bool stacks = false;
 
     Path path;
@@ -19,9 +18,13 @@ public class Movement : MonoBehaviour
 
     Vector2Int stepFrom;
     Vector2Int pathDestination;
+    Vector2Int currentOccupied;
     int stepIndex;
     bool followPathCoroutine;
     bool stopOrder;
+
+
+
 
     void Update()
     {
@@ -34,7 +37,7 @@ public class Movement : MonoBehaviour
 
     }
 
-    public void Stop()
+    public void StopOrder()
     {
         stopOrder = true;
     }
@@ -115,7 +118,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         t = 0;
-        _mapOccupiedInfo = FindObjectOfType<MapOccupiedInfo>();
+        _mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
         if (_mapOccupiedInfo == null)
         {
             Debug.LogError("MapOccupiedInfo not found, critical failure.");
@@ -132,7 +135,19 @@ public class Movement : MonoBehaviour
         var closest = ClosestTileCoordinatesV3(transform.position);
         transform.position = closest;
         stepFrom = new Vector2Int ((int)closest.x, (int)closest.y);
-        _mapOccupiedInfo.Occupy(stepFrom);
+        
+        Occupy(stepFrom);
+    }
+
+    public void Die()
+    {
+        _mapOccupiedInfo.Deoccupy(currentOccupied);
+    }
+
+    private void Occupy(Vector2Int tile)
+    {
+        _mapOccupiedInfo.Occupy(tile) ;
+        currentOccupied = tile;
     }
 
     private Vector3 ClosestTileCoordinatesV3(Vector3 position)
@@ -171,7 +186,7 @@ public class Movement : MonoBehaviour
         Vector2Int startV2Int = new Vector2Int((int)start.x, (int)start.y);
 
         _mapOccupiedInfo.Deoccupy(startV2Int);
-        _mapOccupiedInfo.Occupy(endV2Int);
+        Occupy(endV2Int);
 
         float distance = (end - start).magnitude;
 
@@ -185,7 +200,7 @@ public class Movement : MonoBehaviour
             transform.position = Vector3.Lerp(start, end, Mathf.Clamp01(t * moveSpeed / distance));
 
 
-            if (t / distance >= 1)
+            if (t * moveSpeed / distance >= 1)
             {
                 complete = true;
                 transform.position = new Vector3(endV2Int.x, endV2Int.y, 0);

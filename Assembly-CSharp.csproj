@@ -56,13 +56,22 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\IAttack.cs" />
+    <Compile Include="Assets\Scripts\UnitSpawnInfo.cs" />
+    <Compile Include="Assets\Scripts\VectorTools.cs" />
+    <Compile Include="Assets\Graphics\MeshGenerator\GenerateSphere\DrawSphere.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\SeekBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\Extractor.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\Scripts\Powers\Teleport.cs" />
+    <Compile Include="Assets\Scripts\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Scripts\PlayerBuildUnits.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\ProjectileTypeEnum.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
@@ -71,20 +80,25 @@
     <Compile Include="Assets\Scripts\Unit Components\SelectableUnit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\WanderBehaviour.cs" />
     <Compile Include="Assets\Scripts\BlockManagerHolder.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\AILerpEdited.cs" />
+    <Compile Include="Assets\Scripts\SetDefaultParent.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
+    <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\BlockOccupiedNode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\ProjectileEffects.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\shapesDrawPulsingLine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\Graphics\MeshGenerator\GenerateQuadMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -92,34 +106,42 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Unit Components\TargetClosestModule.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Targetable.cs" />
+    <Compile Include="Assets\Scripts\ResourceNodeMapSingleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\ResourceNode.cs" />
+    <Compile Include="Assets\Scripts\PlayerRes.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
-    <Compile Include="Assets\Scripts\Unit Components\UnitInfo.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\Unit.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\drawLineToTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\Scripts\MapOccupiedInfo.cs" />
+    <Compile Include="Assets\Scripts\MapOccupiedInfoSingleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\StraightProjBehaviour.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\MoveableUnit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\MovableUnit2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\Scripts\Unit Components\FireProjectileTowardsTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Movement.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\FireProjectileTowardsTarget.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\StraightShotBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\ProjectileEffects.cs" />
-    <Compile Include="Assets\SetDefaultParent.cs" />
-    <Compile Include="Assets\WanderBehaviour.cs" />
-    <Compile Include="Assets\SeekBehaviour.cs" />
+    <Compile Include="Assets\Scripts\StaticInstance.cs" />
+    <Compile Include="Assets\Scripts\Singletons.cs" />
+    <Compile Include="Assets\SelectionBoxHack.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\TargetCollision.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\TargetTeamCollision.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\SeekProjBehaviour.cs" />
+    <Compile Include="Assets\FormationStamp.cs" />
+    <Compile Include="Assets\AttackMoveBehaviour.cs" />
+    <Compile Include="Assets\TargetingModule.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />
@@ -160,7 +182,6 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc ColorDodge.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Torus LinearBurn.shader" />
-     <None Include="Assets\Materials\NewSurfaceShader.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Polyline 2D Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cuboid LinearBurn.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Polygon Lighten.shader" />
@@ -173,12 +194,12 @@
      <None Include="Assets\Shapes\Shaders\Shapes.cginc" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Darken.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Texture Opaque.shader" />
-     <None Include="Assets\Materials\selectedShader.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
-     <None Include="Assets\Materials\NewImageEffectShader.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Polyline 2D ColorBurn.shader" />
+     <None Include="Assets\Graphics\GlitteringPinkSprite.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Polyline 2D Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Rect Darken.shader" />
+     <None Include="Assets\Graphics\MeshGenerator\GenerateSphere\DrawSphere.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 3D Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Quad Darken.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 3D Multiplicative.shader" />
@@ -239,7 +260,6 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Regular Polygon Darken.shader" />
      <None Include="Assets\Shapes\Shaders\Core\Torus Core.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
-     <None Include="Assets\Materials\Unlit.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Subtractive.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Opaque.shader" />
@@ -253,13 +273,14 @@
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Torus Multiplicative.shader" />
+     <None Include="Assets\Graphics\GlitteringPinkWithGlow.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 2D Multiplicative.shader" />
+     <None Include="Assets\Graphics\MeshGenerator\GenerateSphere\DrawSphereSmooth.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cuboid Transparent.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 3D ColorDodge.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Texture Transparent.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Quad ColorBurn.shader" />
      <None Include="Assets\Shapes\Shaders\Core\Texture Core.cginc" />
-     <None Include="Assets\Materials\minimumPixel.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Transparent.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Torus Lighten.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Torus ColorBurn.shader" />
@@ -930,11 +951,17 @@
     <Reference Include="Unity.2D.PixelPerfect">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
+    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="PsdPlugin">
       <HintPath>Library\ScriptAssemblies\PsdPlugin.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Tilemap.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
@@ -1008,6 +1035,9 @@
     <Reference Include="Unity.Postprocessing.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.Postprocessing.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.RenderPipelines.Universal.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Animation.Triangle.Runtime">
       <HintPath>Library\ScriptAssemblies\Unity.2D.Animation.Triangle.Runtime.dll</HintPath>
     </Reference>
@@ -1019,6 +1049,9 @@
     </Reference>
     <Reference Include="Unity.2D.PixelPerfect.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.2D.PixelPerfect.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
+      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
     </Reference>
     <Reference Include="Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary">
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
@@ -1046,18 +1079,6 @@
     </Reference>
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Shaders">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Shaders.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipeline.Universal.ShaderLibrary">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipeline.Universal.ShaderLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Runtime">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.RenderPipelines.Universal.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.Universal.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

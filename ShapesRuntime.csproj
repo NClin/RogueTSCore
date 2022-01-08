@@ -90,8 +90,8 @@
     <Compile Include="Assets\Shapes\Scripts\Runtime\Microtypes\LineGeometry.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Immediate Mode\TexturePlacement.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Components\Quad.cs" />
-    <Compile Include="Assets\Shapes\Scripts\Runtime\Immediate Mode\ShapeDrawState.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Immediate Mode\DashStack.cs" />
+    <Compile Include="Assets\Shapes\Scripts\Runtime\Immediate Mode\ShapeDrawState.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Immediate Mode\DrawStyle.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Components\Cuboid.cs" />
     <Compile Include="Assets\Shapes\Scripts\Runtime\Microtypes\ScaleMode.cs" />

@@ -20,7 +20,7 @@ public class MovableUnit2 : MonoBehaviour
     bool initialized = false;
     Coroutine initializer;
 
-    private MapOccupiedInfo _mapOccupiedInfo;
+    private MapOccupiedInfoSingleton _mapOccupiedInfo;
     private Vector2Int currentBlocked;
 
 
@@ -47,7 +47,7 @@ public class MovableUnit2 : MonoBehaviour
 
         seeker = GetComponent<Seeker>();
         t = 0;
-        _mapOccupiedInfo = FindObjectOfType<MapOccupiedInfo>();
+        _mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
 
         nodeBlocker = GetComponent<SingleNodeBlocker>();
 

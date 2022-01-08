@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarPathfindingProject", "AstarPathfindingProject.csproj", "{094EA157-DE66-0A8B-3A08-D15F215707B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesRuntime", "ShapesRuntime.csproj", "{33DCF752-B572-91DE-7B32-93E00730A72B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{1E7026F5-BFB1-FF01-B541-80DF36A79A90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesRuntime", "ShapesRuntime.csproj", "{33DCF752-B572-91DE-7B32-93E00730A72B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapesSamples", "ShapesSamples.csproj", "{7079BA85-AD00-AFC2-1CFF-A14C02932221}"
 EndProject
@@ -25,14 +25,14 @@ Global
 		{094EA157-DE66-0A8B-3A08-D15F215707B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{094EA157-DE66-0A8B-3A08-D15F215707B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{094EA157-DE66-0A8B-3A08-D15F215707B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33DCF752-B572-91DE-7B32-93E00730A72B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33DCF752-B572-91DE-7B32-93E00730A72B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33DCF752-B572-91DE-7B32-93E00730A72B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33DCF752-B572-91DE-7B32-93E00730A72B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1E7026F5-BFB1-FF01-B541-80DF36A79A90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1E7026F5-BFB1-FF01-B541-80DF36A79A90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E7026F5-BFB1-FF01-B541-80DF36A79A90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E7026F5-BFB1-FF01-B541-80DF36A79A90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33DCF752-B572-91DE-7B32-93E00730A72B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33DCF752-B572-91DE-7B32-93E00730A72B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33DCF752-B572-91DE-7B32-93E00730A72B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33DCF752-B572-91DE-7B32-93E00730A72B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7079BA85-AD00-AFC2-1CFF-A14C02932221}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7079BA85-AD00-AFC2-1CFF-A14C02932221}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7079BA85-AD00-AFC2-1CFF-A14C02932221}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -6,28 +6,41 @@ public class TargetClosestModule : MonoBehaviour
 {
 
     [SerializeField]
-    private float range;
+    public float range;
     [SerializeField]
-    private float scanFrequency;
+    private float scanFrequency = 1;
 
-    private GameObject? target;
+    private HasTarget hasTarget;
 
     [SerializeField]
-    private Team teamToTarget;
+    public Team teamToTarget;
 
     private bool scanRunning;
 
     private void Update()
     {
+        if (hasTarget == null)
+        {
+            hasTarget = GetComponent<HasTarget>();
+            if (hasTarget == null)
+            {
+                gameObject.AddComponent<HasTarget>();
+            }
+        }
+
         if (scanRunning == false)
         {
             StartCoroutine(targetSearchCoroutine());
         }
     }
 
+    /// <summary>
+    /// Legacy, do not use. Use HasTarget.target instead.
+    /// </summary>
+    /// <returns></returns>
     public GameObject? GetCurrentTarget()
     {
-        return target;
+        return hasTarget.target;
     }
 
     private IEnumerator targetSearchCoroutine()
@@ -35,18 +48,18 @@ public class TargetClosestModule : MonoBehaviour
         while (true)
         {
             scanRunning = true;
-            if (target != null)
+
+            if (GetCurrentTarget() == null)
             {
-                if (Vector2.Distance(transform.position, target.transform.position) > range)
-                {
-                    target = null;
-                }
+                yield return new WaitForSeconds(scanFrequency);
             }
 
-            if (target == null)
+            if (GetCurrentTarget() != null && Vector2.Distance(transform.position, hasTarget.transform.position) > range)
             {
-                FindClosestTarget(teamToTarget);
+                hasTarget.target = null;
             }
+
+            FindClosestTarget(teamToTarget);
 
             yield return new WaitForSeconds(scanFrequency);
         }
@@ -60,7 +73,7 @@ public class TargetClosestModule : MonoBehaviour
         var potentials = Physics.OverlapSphere(transform.position, range);
         if (potentials.Length == 0)
         {
-            target = null;
+            hasTarget.target = null;
             return;
         }
 
@@ -69,7 +82,7 @@ public class TargetClosestModule : MonoBehaviour
 
             if (potential.gameObject.GetComponent<Targetable>() != null
                 && potential.gameObject != gameObject
-                && potential.gameObject.GetComponent<UnitInfo>().team == targetTeam
+                && potential.gameObject.GetComponent<Unit>().team == targetTeam
                 )
             {
 
@@ -84,7 +97,12 @@ public class TargetClosestModule : MonoBehaviour
 
         if (closestTarget != null)
         {
-            target = closestTarget;
+            hasTarget.target = closestTarget;
+
+        }
+        else
+        {
+
         }
     }
 }

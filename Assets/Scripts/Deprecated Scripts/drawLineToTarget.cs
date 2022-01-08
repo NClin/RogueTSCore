@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TargetClosestModule))]
+[RequireComponent(typeof(HasTarget))]
 [RequireComponent(typeof(shapesDrawPulsingLine))]
 public class drawLineToTarget : MonoBehaviour
 {
 
-    TargetClosestModule acquireTarget;
+    HasTarget hasTarget;
     shapesDrawPulsingLine drawPulsingLine;
 
     void Start()
     {
-        acquireTarget = GetComponent<TargetClosestModule>();
+        hasTarget = GetComponent<HasTarget>();
         drawPulsingLine = GetComponent<shapesDrawPulsingLine>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (acquireTarget.GetCurrentTarget() != null)
+        if (hasTarget.target != null)
         {
-            drawPulsingLine.DrawPulsingLine(transform.parent.position, acquireTarget.GetCurrentTarget().transform.position);
+            drawPulsingLine.DrawPulsingLine(transform.parent.position, hasTarget.target.transform.position);
         }
     }
 }

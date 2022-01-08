@@ -5,8 +5,18 @@ public class SelectableUnit : MonoBehaviour
     [SerializeField]
     private GameObject selectedIndicator;
 
+    private void Start()
+    {
+        if (selectedIndicator == null)
+        {
+            selectedIndicator = Instantiate((GameObject)Resources.Load("SelectionIndicator"), gameObject.transform);
+        }
+    }
+
     void Update()
     {
+        
+
         if (selected)
         {
             selectedIndicator.SetActive(true);

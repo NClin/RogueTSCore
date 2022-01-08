@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+//[RequireComponent(typeof(Map))] 
 public class MapGenerator : MonoBehaviour
 {
-    MapOccupiedInfo mapOccupiedInfo;
     Tilemap tilemap;
+    //Map map;
 
     [SerializeField]
     Tile wallTile;
@@ -19,14 +20,18 @@ public class MapGenerator : MonoBehaviour
     float offsetX = 0.5f;
     float offsetY = 0.5f;
 
-    int width = 16;
-    int height = 16;
+    [SerializeField]
+    int width = 60;
+    [SerializeField]
+    int height = 60;
 
     // Start is called before the first frame update
     void Awake()
     {
-        mapOccupiedInfo = GetComponent<MapOccupiedInfo>();
+        //map = GetComponent<Map>();
         tilemap = GetComponentInChildren<Tilemap>();
+        //width = map.width;
+        //height = map.height;
     }
 
 
@@ -65,8 +70,8 @@ public class MapGenerator : MonoBehaviour
         }
 
         tilemap.RefreshAllTiles();
-        mapGenerated = true;
 
+        mapGenerated = true;
     }
 
 }

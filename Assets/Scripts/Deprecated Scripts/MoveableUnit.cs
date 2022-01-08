@@ -32,7 +32,7 @@ public class MoveableUnit : MonoBehaviour
     private float arrivalThreshold = 0.001f;
     private Vector2Int occupiedTile;
     private bool isMoving;
-    private MapOccupiedInfo mapOccupiedInfo;
+    private MapOccupiedInfoSingleton mapOccupiedInfo;
 
     private bool initialized = false;
 
@@ -93,7 +93,7 @@ public class MoveableUnit : MonoBehaviour
         moveTarget.position = transform.position;
         seeker = GetComponent<Seeker>();
 
-        mapOccupiedInfo = FindObjectOfType<MapOccupiedInfo>();
+        mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
         TeleportTo(ClosestTileCoordinates(transform.position));
         stepVector = transform.position;
         previousStepVector = transform.position;

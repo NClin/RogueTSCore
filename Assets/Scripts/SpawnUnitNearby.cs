@@ -7,9 +7,9 @@ public class SpawnUnitNearby : MonoBehaviour
     [SerializeField]
     private GameObject unitToSpawn;
     [SerializeField]
-    private int spawnHealth;
-    [SerializeField]
     private int spawnMaxHealth;
+    [SerializeField]
+    private int spawnMaxShield;
     [SerializeField]
     private int spawnDamage;
     [SerializeField]
@@ -30,10 +30,8 @@ public class SpawnUnitNearby : MonoBehaviour
     private void spawnUnit()
     {
         GameObject toSpawn = Instantiate(unitToSpawn, transform.position, Quaternion.identity);
-        UnitInfo toSpawnInfo = toSpawn.GetComponent<UnitInfo>();
-
-        toSpawnInfo.health = spawnHealth;
-        toSpawnInfo.maxHealth = spawnMaxHealth;
+        Unit toSpawnInfo = toSpawn.GetComponent<Unit>();
+        toSpawnInfo.SetSpawnValues(spawnMaxHealth, spawnMaxShield);
         //TODO: Make attack stats generic
         unitToSpawn.GetComponentInChildren<FireProjectileTowardsTarget>().damage = spawnDamage;
         var randomDir = Random.insideUnitSphere.normalized;
