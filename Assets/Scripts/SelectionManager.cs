@@ -13,6 +13,8 @@ public class SelectionManager : MonoBehaviour
     private List<SelectableUnit> selectedUnits;
     [SerializeField]
     private float longClickThreshold = 0.05f;
+    [SerializeField]
+    private float minMouseMovement = 0.3f;
     private bool mouse0held = false;
     private bool mouse1held = false;
     private float mouse0heldTime = 0;
@@ -21,6 +23,7 @@ public class SelectionManager : MonoBehaviour
     Vector3 longClickStart; 
     Vector3 longClickCurrent;
     Vector3 longClickEnd;
+
 
     [SerializeField]
     GameObject selectionBox;
@@ -45,6 +48,22 @@ public class SelectionManager : MonoBehaviour
     void Update()
     {
         ProcessInput();
+    }
+
+    private void DrawSelectionRect()
+    {
+        var center = VectorTools.GetBoxCenter(longClickStart, longClickCurrent);
+        var extents = VectorTools.GetBoxExtents(longClickStart, longClickCurrent);
+
+        Rect toDraw = new Rect(center - extents / 2, extents);
+        using (Draw.Command(Camera.main))
+        {
+            Draw.Color = Color.green;
+            Draw.Matrix = transform.localToWorldMatrix;
+            Draw.LineGeometry = LineGeometry.Volumetric3D;
+            Draw.RectangleBorder(toDraw, 0.1f);
+        }
+
     }
 
     private void AddToSelection(SelectableUnit toSelect)
@@ -81,13 +100,14 @@ public class SelectionManager : MonoBehaviour
     {
         // Hack z value:
         // Can implement this with ray to tilemap, get a point, start there?
-        start.z = -.1f;
-        end.z = .1f;
+        start.z = 0f;
+        end.z = 0f;
 
         var boxCenter = VectorTools.GetBoxCenter(start, end);
         var boxExtents = VectorTools.GetBoxExtents(start, end);
 
-        var potentials = Physics.OverlapBox(boxCenter, boxExtents);
+        var potentials = Physics.OverlapBox(boxCenter, boxExtents/2);
+        
         Debug.Log(potentials.Length + " overlaps");
         foreach (Collider potential in potentials)
         {
@@ -118,20 +138,15 @@ public class SelectionManager : MonoBehaviour
     {
         //        Vector3 center = VectorTools.GetBoxCenter(start, end);
 
-        Debug.Log("start = " + start);
-        Debug.Log("end = " + end);
-
         var startTile = VectorTools.GetClosestTileCoordinatesV3(start);
         var endTile = VectorTools.GetClosestTileCoordinatesV3(end);
 
-        Debug.Log("startTile = " + startTile);
-        Debug.Log("endTile = " + endTile);
 
         ClearSelectionBox();
 
         if (selectionBoxInstance == null)
         {
-            selectionBoxes.Add(Instantiate(selectionBox, startTile, Quaternion.identity));
+            //selectionBoxes.Add(Instantiate(selectionBox, startTile, Quaternion.identity));
         }
 
         // hurrr
@@ -141,18 +156,13 @@ public class SelectionManager : MonoBehaviour
         int miny = startTile.y < endTile.y ? (int)startTile.y : (int)endTile.y;
         int maxy = startTile.y > endTile.y ? (int)startTile.y : (int)endTile.y;
 
-        Debug.Log("minx = " + minx);
-        Debug.Log("maxx = " + maxx);
-        Debug.Log("miny = " + miny);
-        Debug.Log("maxy = " + maxy);
 
 
         for (int x = minx; x <= maxx; x++)
         {
             for (int y = miny; y <= maxy; y++)
             {
-                Debug.Log("Drawing at " + new Vector3(x, y, 0));
-                selectionBoxes.Add(Instantiate(selectionBox, new Vector3(x, y, 0), Quaternion.identity));
+                //selectionBoxes.Add(Instantiate(selectionBox, new Vector3(x, y, 0), Quaternion.identity));
             }
         }
 
@@ -170,6 +180,8 @@ public class SelectionManager : MonoBehaviour
             if (longClick)
             {
                 longClickCurrent = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                longClickCurrent.z = 0; // hack
+                DrawSelectionRect();
                 DrawLongClickBox(longClickStart, longClickCurrent);
             }
 
@@ -177,15 +189,20 @@ public class SelectionManager : MonoBehaviour
             {
                 Debug.Log("LongLeftStarted");
                 longClickStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                longClickStart.z = 0; // hack
                 longClick = true;
             } 
         }
 
         if (Input.GetMouseButtonUp(0))
         {
-            if (longClick)
+            if (longClick && Vector3.Distance(longClickStart, longClickCurrent) > minMouseMovement)
             {
                 DoLongLeftClick(longClickStart, longClickCurrent);
+            }
+            else
+            {
+                DoLeftClick();
             }
             longClick = false;
             mouse0held = false;
@@ -193,35 +210,6 @@ public class SelectionManager : MonoBehaviour
             ClearSelectionBox();
         }
 
-
-        // Toggle selection on single unit.
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)))
-            {
-                RaycastHit hitInfo;
-                Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
-
-                if (hitInfo.collider.gameObject.GetComponent<SelectableUnit>())
-                {
-                    var clicked = hitInfo.collider.gameObject.GetComponent<SelectableUnit>();
-                    if (selectedUnits.Contains(clicked) && Input.GetKey(KeyCode.LeftShift))
-                    {
-                        RemoveFromSelection(clicked);
-                    }
-                    else
-                    { 
-                        if (!Input.GetKey(KeyCode.LeftShift)) { ClearSelection(); }
-
-                        AddToSelection(hitInfo.collider.gameObject.GetComponent<SelectableUnit>());
-                    }
-                }
-            }
-            else
-            {
-                ClearSelection();
-            }
-        }
 
         if (Input.GetMouseButton(1))
         {
@@ -242,27 +230,17 @@ public class SelectionManager : MonoBehaviour
 
         }
 
-        // Give order to selected units.
-        if (Input.GetMouseButtonDown(1))
-        {
-
-            if (selectedUnits.Count > 0)
-            {
-                foreach (SelectableUnit unit in selectedUnits)
-                {
-                    if (unit.GetComponent<Movement>())
-                    {
-                        unit.GetComponent<Movement>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-                    }
-                }
-            }
-        }
-
         if (Input.GetMouseButtonUp(1))
         {
-            if (longClick)
+            if (longClick && Vector3.Distance(longClickStart, longClickCurrent) > minMouseMovement)
             {
-                DoLongClick(1);
+                LineFormationMovement(longClickStart, longClickCurrent, selectedUnits);
+
+                DoLongRightClick();
+            }
+            else
+            {
+                DoRightClick();
             }
             mouse1held = false;
             mouse1heldTime = 0;
@@ -272,10 +250,79 @@ public class SelectionManager : MonoBehaviour
 
     }
 
-    private void DoLongClick(int mouseButton)
+    private void DoRightClick()
     {
-        // some kind of formation move order.
-        Debug.Log("formation move order");
+        if (selectedUnits.Count > 0)
+        {
+            foreach (SelectableUnit unit in selectedUnits)
+            {
+                if (unit.GetComponent<Movement>())
+                {
+                    unit.GetComponent<Movement>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                }
+            }
+        }
     }
 
+    private void DoLongRightClick()
+    {
+        // some kind of formation move order.
+    }
+
+    private void LineFormationMovement(Vector3 lineStart, Vector3 lineEnd, List<SelectableUnit> units)
+    {
+        var linePositions = VectorTools.BesenhamLine(VectorTools.GetClosestTileCoordinatesV2Int(lineStart),
+            VectorTools.GetClosestTileCoordinatesV2Int(lineEnd));
+        
+        FormationStamp stamp = GetComponent<FormationStamp>();
+        stamp.StampLine(lineStart, lineEnd);
+
+        Vector2 rowTranslation = VectorTools.GetVectorFormationRowTranslation(lineStart, lineEnd);
+
+        Debug.Log("moving units count: " + units.Count);
+
+        int i = 0;
+        int row = 0;
+        foreach (SelectableUnit unit in units)
+        {
+            if (i >= linePositions.Count)
+            {
+                row++;
+                i = 0;
+            }
+
+            unit.GetComponent<Movement>().MoveTo(linePositions[i] + row * rowTranslation);
+            i++;
+        }
+
+
+    }
+
+    private void DoLeftClick()
+    {
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition)))
+        {
+            RaycastHit hitInfo;
+            Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hitInfo);
+
+            if (hitInfo.collider.gameObject.GetComponent<SelectableUnit>())
+            {
+                var clicked = hitInfo.collider.gameObject.GetComponent<SelectableUnit>();
+                if (selectedUnits.Contains(clicked) && Input.GetKey(KeyCode.LeftShift))
+                {
+                    RemoveFromSelection(clicked);
+                }
+                else
+                {
+                    if (!Input.GetKey(KeyCode.LeftShift)) { ClearSelection(); }
+
+                    AddToSelection(hitInfo.collider.gameObject.GetComponent<SelectableUnit>());
+                }
+            }
+        }
+        else
+        {
+            ClearSelection();
+        }
+    }
 }

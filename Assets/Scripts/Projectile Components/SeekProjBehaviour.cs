@@ -5,28 +5,30 @@ using UnityEngine;
 public class SeekProjBehaviour : MonoBehaviour
 {
     private GameObject target;
-    private Vector3 dir;
+    private Vector3 desiredVelocity;
     private float t;
+    private Vector3 currentVelocity;
+    private Vector3 steering;
 
     [SerializeField]
-    private float speed;
+    private float speed = 3;
     [SerializeField]
-    private float lifespan;
+    private float lifespan = 5;
+    [SerializeField]
+    private float maxSteering = 0.01f;
 
 
 
     void Start()
     {
         target = GetComponent<HasTarget>().target;
+        currentVelocity = transform.up * speed;
+        Debug.Log("currentVelocity = " + currentVelocity);
+    }
 
-        if (target == null)
-        {
-            dir = transform.forward;
-        }
-        else
-        {
-            dir = (target.transform.position - transform.position).normalized;
-        }
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * speed);
     }
 
     void Update()
@@ -36,11 +38,22 @@ public class SeekProjBehaviour : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (target != null)
+
+        if (target == null)
         {
-            dir = (target.transform.position - transform.position).normalized;
+            desiredVelocity = transform.up * speed;
+        }
+        else
+        {
+            desiredVelocity =
+                (target.transform.position
+                - transform.position).normalized * speed;
+            steering = (desiredVelocity - currentVelocity).normalized * maxSteering; // could be done in a smoother way.
         }
 
-        transform.position += dir * speed * Time.deltaTime;
+        var newVelocity = (currentVelocity + steering).normalized * speed * Time.deltaTime;
+        transform.position += newVelocity;
+        currentVelocity = newVelocity;
+
     }
 }

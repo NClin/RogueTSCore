@@ -98,7 +98,7 @@ public class PlayerBuildUnits : MonoBehaviour
 
 
             Vector2Int clickTile = VectorTools.GetClosestTileCoordinatesV2Int(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            if (_ResourceNodeMap.AddNode(clickTile, 500))
+            if (_ResourceNodeMap.AddNode(clickTile, 500, ResourceType.Circle)) 
             {
 
             }

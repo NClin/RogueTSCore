@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEditor;
 
 public class Movement : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Movement : MonoBehaviour
 
     Path path;
     float t;
+    int maxAttempts = 10;
+    int attempts = 0;
+    bool stuck = false;
 
     Vector2Int stepFrom;
     Vector2Int pathDestination;
@@ -22,6 +26,8 @@ public class Movement : MonoBehaviour
     int stepIndex;
     bool followPathCoroutine;
     bool stopOrder;
+
+    bool shouldMove;
 
 
 
@@ -33,8 +39,24 @@ public class Movement : MonoBehaviour
             initializer = StartCoroutine(Initialize());
         }
 
-        // TODO: Consider adding logic to un-stack stacked units.
+        if (Vector2.Distance(pathDestination, currentOccupied) > 0.5 && !shouldMove)
+        {
+            MoveTo(new Vector3(pathDestination.x, pathDestination.y, 0));
+        }
 
+        if (shouldMove)
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
+        }
+        else { GetComponent<SpriteRenderer>().color = Color.white; }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        Handles.Label(transform.position, pathDestination.x + ", " +  pathDestination.y);
+
+        Gizmos.DrawLine(new Vector3(pathDestination.x, pathDestination.y, 0), transform.position);
     }
 
     public void StopOrder()
@@ -44,8 +66,12 @@ public class Movement : MonoBehaviour
 
     public void MoveTo(Vector3 input)
     {
+        shouldMove = true;
         stopOrder = false;
+        stuck = false;
         pathDestination = new Vector2Int((int)ClosestTileCoordinatesV3(input).x, (int)ClosestTileCoordinatesV3(input).y);
+
+        attempts = 0;
 
         if (!followPathCoroutine)
         {
@@ -59,11 +85,16 @@ public class Movement : MonoBehaviour
         return new Vector3(pathDestination.x, pathDestination.y, 0);
     }
 
+    /// <summary>
+    /// I don't understand how this works and will have to rework it.
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator FollowPathCoroutine()
     {
         if (moveSpeed == 0
             || stopOrder == true)
         {
+            shouldMove = false;
             yield return null;
         }
 
@@ -72,13 +103,14 @@ public class Movement : MonoBehaviour
         stepIndex = 1;
         bool followingPath = true;
 
+
         while (followingPath)
         {
             // check destination. New path if changed.
             if (currentDestination != pathDestination)
             {
                 currentDestination = pathDestination;
-                path = GetPathImmediately((Vector2)stepFrom, (Vector2)pathDestination);
+                path = GetPathAvoidingAllOccupiedTiles(currentDestination);
                 stepIndex = 1;
             }
 
@@ -87,30 +119,46 @@ public class Movement : MonoBehaviour
             {
                 followingPath = false;
                 followPathCoroutine = false;
+                shouldMove = false;
                 yield break;
             }
 
-            // check if next step occupied
-            Vector2Int nextStepV2Int = new Vector2Int((int)path.vectorPath[stepIndex].x, (int)path.vectorPath[stepIndex].y);
-            if (_mapOccupiedInfo.IsOccupied(nextStepV2Int))
+            if (followingPath)
             {
-                // Get a new path, otherwise wait.
-                path = GetPathAvoidingAllOccupiedTiles(currentDestination);
-                stepIndex = 1;
-            }
+                stuck = false;
+                // check if next step occupied
+                Vector2Int nextStepV2Int = new Vector2Int((int)path.vectorPath[stepIndex].x, (int)path.vectorPath[stepIndex].y);
 
-            // check if arrived (again, path may have changed)
-            if (stepIndex >= path.vectorPath.Count 
-                || stopOrder == true)
-            {
-                followingPath = false;
-                followPathCoroutine = false;
-                yield break;
-            }
-            yield return StartCoroutine(MoveFromToCell(stepFrom, path.vectorPath[stepIndex]));
+                if (_mapOccupiedInfo.IsOccupied(nextStepV2Int))
+                {
+                    attempts++;
+                    path = GetPathAvoidingAllOccupiedTiles(currentDestination);
+                    stepIndex = 1;
+                    stuck = true;
 
+                    yield return new WaitForSeconds(0.1f);
+                    continue;
+                }
+
+                if (!stuck)
+                {
+                    // check if arrived (again, path may have changed)
+                    if (stepIndex >= path.vectorPath.Count
+                        || stopOrder == true)
+                    {
+
+                        followingPath = false;
+                        followPathCoroutine = false;
+                        shouldMove = false;
+                    }
+
+                    if (followingPath)
+                    {
+                        yield return StartCoroutine(MoveFromToCell(stepFrom, path.vectorPath[stepIndex]));
+                    }
+                }
+            }           
         }
-
     }
 
     private IEnumerator Initialize()
@@ -146,7 +194,7 @@ public class Movement : MonoBehaviour
 
     private void Occupy(Vector2Int tile)
     {
-        _mapOccupiedInfo.Occupy(tile) ;
+        _mapOccupiedInfo.Occupy(tile);
         currentOccupied = tile;
     }
 
@@ -204,17 +252,12 @@ public class Movement : MonoBehaviour
             {
                 complete = true;
                 transform.position = new Vector3(endV2Int.x, endV2Int.y, 0);
-                StepComplete();
+                stepFrom = VectorTools.GetClosestTileCoordinatesV2Int(transform.position);
+                stepIndex++;
             }
 
             yield return null;
         }
-    }
-
-    private void StepComplete()
-    {
-        stepIndex++;
-        SnapToNearestTile();
     }
 
     private Path GetPathImmediately(Vector3 start, Vector3 end)

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Map))]
+
 public class ResourceNodeMapSingleton : MonoBehaviour
 {
     [SerializeField]
@@ -9,8 +11,7 @@ public class ResourceNodeMapSingleton : MonoBehaviour
 
     private ResourceNode?[,] resourceNodeMap;
 
-    private int height = 60;
-    private int width = 60;
+    private Map map;
 
     public void Awake()
     {
@@ -22,6 +23,8 @@ public class ResourceNodeMapSingleton : MonoBehaviour
             Debug.LogError("ResourceNodeMapSingleton already exists");
             Destroy(this);
         }
+        CheckIntegrity();
+
 
 
     }
@@ -56,15 +59,24 @@ public class ResourceNodeMapSingleton : MonoBehaviour
 
     private void CheckIntegrity()
     {
+        if (map == null)
+        {
+            map = FindObjectOfType<Map>();
+            map.resourceNodeMapSingleton = this;
+        }
+        if (map == null)
+        {
+            Debug.LogError("Map not found by ResourceNodeMapSingleton. Should be tightly coupled.");
+        }
         if (resourceNodeMap == null)
         {
-            Generate(height, width);
+            Generate(map.height, map.width);
         }
     }
 
     public bool IsNodeAt(Vector2Int tile)
     {
-        CheckIntegrity();
+        CheckIntegrity(); // remove these later if they never trigger? The one in Awake() should be sufficient.
 
         if (resourceNodeMap[tile.x, tile.y] != null)
         { return true; }
@@ -72,9 +84,9 @@ public class ResourceNodeMapSingleton : MonoBehaviour
         { return false; }    
     }
 
-    public bool AddNode(Vector2Int tile, int nodeStock)
+    public bool AddNode(Vector2Int tile, int nodeStock, ResourceType resourceType)
     {
-        CheckIntegrity();
+        CheckIntegrity(); // remove these later if they never trigger? The one in Awake() should be sufficient.
 
         if (IsNodeAt(tile))
          {
@@ -82,7 +94,7 @@ public class ResourceNodeMapSingleton : MonoBehaviour
          }
 
         var toSpawn = Instantiate(nodePrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
-        toSpawn.GetComponent<ResourceNode>().SetStock(nodeStock);
+        toSpawn.GetComponent<ResourceNode>().SetStock(nodeStock, resourceType);
         resourceNodeMap[tile.x, tile.y] = toSpawn.GetComponent<ResourceNode>();
         return true;
     }

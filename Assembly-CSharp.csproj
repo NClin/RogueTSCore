@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\blockmanagersetter.cs" />
     <Compile Include="Assets\Scripts\IAttack.cs" />
     <Compile Include="Assets\Scripts\UnitSpawnInfo.cs" />
     <Compile Include="Assets\Scripts\VectorTools.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Assets\Scripts\Unit Components\Extractor.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\Scripts\Powers\Teleport.cs" />
+    <Compile Include="Assets\Scripts\ResourceType.cs" />
     <Compile Include="Assets\Scripts\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Assets\Scripts\Unit Components\SelectableUnit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\FormationStamp.cs" />
     <Compile Include="Assets\Scripts\Unit Components\WanderBehaviour.cs" />
     <Compile Include="Assets\Scripts\BlockManagerHolder.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -87,7 +90,9 @@
     <Compile Include="Assets\Scripts\SetDefaultParent.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\Scripts\Map.cs" />
+    <Compile Include="Assets\TargetingModule.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\Scripts\Singletons.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\BlockOccupiedNode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
@@ -97,7 +102,10 @@
     <Compile Include="Assets\Scripts\Deprecated Scripts\shapesDrawPulsingLine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\SeekProjBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\TargetTeamCollision.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\AttackMoveBehaviour.cs" />
     <Compile Include="Assets\Graphics\MeshGenerator\GenerateQuadMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
@@ -107,17 +115,21 @@
     <Compile Include="Assets\Scripts\Unit Components\TargetClosestModule.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Targetable.cs" />
     <Compile Include="Assets\Scripts\ResourceNodeMapSingleton.cs" />
+    <Compile Include="Assets\coroutineAnalysis.cs" />
+    <Compile Include="Assets\Scripts\Projectile Components\TargetCollision.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Unit Components\ResourceNode.cs" />
+    <Compile Include="Assets\Scripts\ResourceNode.cs" />
     <Compile Include="Assets\Scripts\PlayerRes.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Unit.cs" />
+    <Compile Include="Assets\Scripts\StaticInstance.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\drawLineToTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
+    <Compile Include="Assets\SelectionBoxHack.cs" />
     <Compile Include="Assets\Scripts\MapOccupiedInfoSingleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
@@ -133,15 +145,7 @@
     <Compile Include="Assets\Scripts\Unit Components\Movement.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\Scripts\StaticInstance.cs" />
-    <Compile Include="Assets\Scripts\Singletons.cs" />
-    <Compile Include="Assets\SelectionBoxHack.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\TargetCollision.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\TargetTeamCollision.cs" />
-    <Compile Include="Assets\Scripts\Projectile Components\SeekProjBehaviour.cs" />
-    <Compile Include="Assets\FormationStamp.cs" />
-    <Compile Include="Assets\AttackMoveBehaviour.cs" />
-    <Compile Include="Assets\TargetingModule.cs" />
+    <Compile Include="Assets\gridlabels.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />

@@ -29,6 +29,7 @@ public class FormationStamp : MonoBehaviour
 
     public void StampLine(Vector3 start, Vector3 end)
     {
+
         if (tilemap == null)
         {
             tilemap = FindObjectOfType<Tilemap>();

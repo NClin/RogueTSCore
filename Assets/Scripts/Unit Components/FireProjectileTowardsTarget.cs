@@ -14,9 +14,13 @@ public class FireProjectileTowardsTarget : MonoBehaviour
     public float cooldown;
     [SerializeField]
     public int damage;
+    [SerializeField]
+    private float angleVariability = 60f;
 
     private HasTarget hasTarget;
     float t = 0;
+
+
 
     private void Start()
     {
@@ -48,6 +52,7 @@ public class FireProjectileTowardsTarget : MonoBehaviour
         if (hasTarget.target != null)
         {
             var fired = Instantiate(projectile, firePoint.transform.position, firePoint.transform.rotation);
+            //fired.transform.Rotate(0, 0, Random.Range(-angleVariability, angleVariability));
             fired.GetComponent<HasTarget>().target = hasTarget.target;
             fired.GetComponent<ProjectileEffects>().damage = damage;
         }
