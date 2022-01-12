@@ -130,6 +130,7 @@
     <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\SelectionBoxHack.cs" />
+    <Compile Include="Assets\gridlabels.cs" />
     <Compile Include="Assets\Scripts\MapOccupiedInfoSingleton.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
@@ -145,7 +146,6 @@
     <Compile Include="Assets\Scripts\Unit Components\Movement.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\gridlabels.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />

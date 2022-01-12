@@ -234,7 +234,7 @@ public class SelectionManager : MonoBehaviour
         {
             if (longClick && Vector3.Distance(longClickStart, longClickCurrent) > minMouseMovement)
             {
-                LineFormationMovement(longClickStart, longClickCurrent, selectedUnits);
+                StartCoroutine(LineFormationMovement(longClickStart, longClickCurrent, selectedUnits));
 
                 DoLongRightClick();
             }
@@ -246,6 +246,20 @@ public class SelectionManager : MonoBehaviour
             mouse1heldTime = 0;
             formationstamp.ClearStamp();
             longClick = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            if (selectedUnits.Count > 0)
+            {
+                foreach (SelectableUnit unit in selectedUnits)
+                {
+                    if (unit.GetComponent<Movement>())
+                    {
+                        unit.GetComponent<Movement>().StopOrder();
+                    }
+                }
+            }
         }
 
     }
@@ -269,7 +283,7 @@ public class SelectionManager : MonoBehaviour
         // some kind of formation move order.
     }
 
-    private void LineFormationMovement(Vector3 lineStart, Vector3 lineEnd, List<SelectableUnit> units)
+    private IEnumerator LineFormationMovement(Vector3 lineStart, Vector3 lineEnd, List<SelectableUnit> units)
     {
         var linePositions = VectorTools.BesenhamLine(VectorTools.GetClosestTileCoordinatesV2Int(lineStart),
             VectorTools.GetClosestTileCoordinatesV2Int(lineEnd));
@@ -289,6 +303,7 @@ public class SelectionManager : MonoBehaviour
             {
                 row++;
                 i = 0;
+                yield return new WaitForSeconds(0.1f * row);
             }
 
             unit.GetComponent<Movement>().MoveTo(linePositions[i] + row * rowTranslation);

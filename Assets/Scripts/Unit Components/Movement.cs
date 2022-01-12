@@ -20,6 +20,11 @@ public class Movement : MonoBehaviour
     int attempts = 0;
     bool stuck = false;
 
+    float spamMoveToFrequency = 0.5f;
+    float tSpamMoveTo = 0;
+    int tSpamMoveToIterationsMax = 5;
+    int tSpamMoveToIterations = 0;
+
     Vector2Int stepFrom;
     Vector2Int pathDestination;
     Vector2Int currentOccupied;
@@ -39,9 +44,16 @@ public class Movement : MonoBehaviour
             initializer = StartCoroutine(Initialize());
         }
 
-        if (Vector2.Distance(pathDestination, currentOccupied) > 0.5 && !shouldMove)
+        tSpamMoveTo += Time.deltaTime;
+ 
+        if (Vector2.Distance(pathDestination, currentOccupied) > 0.5 
+            && !shouldMove 
+            && tSpamMoveTo > spamMoveToFrequency
+            && tSpamMoveToIterations < tSpamMoveToIterationsMax)
         {
             MoveTo(new Vector3(pathDestination.x, pathDestination.y, 0));
+            tSpamMoveTo = 0;
+            tSpamMoveToIterations++; // when is this reset?
         }
 
         if (shouldMove)
@@ -61,6 +73,7 @@ public class Movement : MonoBehaviour
 
     public void StopOrder()
     {
+        followPathCoroutine = false;
         stopOrder = true;
     }
 
@@ -68,6 +81,7 @@ public class Movement : MonoBehaviour
     {
         shouldMove = true;
         stopOrder = false;
+        Debug.Log(stopOrder);
         stuck = false;
         pathDestination = new Vector2Int((int)ClosestTileCoordinatesV3(input).x, (int)ClosestTileCoordinatesV3(input).y);
 
@@ -95,70 +109,88 @@ public class Movement : MonoBehaviour
             || stopOrder == true)
         {
             shouldMove = false;
+            Debug.Log("setting coroutine false. Should happen at coming to a complete halt");
+            followPathCoroutine = false;
             yield return null;
         }
 
         var currentDestination = pathDestination;
-        path = GetPathAvoidingAllOccupiedTiles(currentDestination);
+        path = GetPathImmediately(transform.position, GetDestinationTile());
         stepIndex = 1;
         bool followingPath = true;
 
 
-        while (followingPath)
+        while (!stopOrder)
         {
             // check destination. New path if changed.
             if (currentDestination != pathDestination)
             {
                 currentDestination = pathDestination;
-                path = GetPathAvoidingAllOccupiedTiles(currentDestination);
+                path = GetPathImmediately(transform.position, GetDestinationTile());
                 stepIndex = 1;
             }
 
             // check if arrived.
             if (stepIndex >= path.vectorPath.Count)
             {
-                followingPath = false;
-                followPathCoroutine = false;
-                shouldMove = false;
+                StopOrder();
                 yield break;
             }
 
             if (followingPath)
             {
                 stuck = false;
+
                 // check if next step occupied
                 Vector2Int nextStepV2Int = new Vector2Int((int)path.vectorPath[stepIndex].x, (int)path.vectorPath[stepIndex].y);
 
                 if (_mapOccupiedInfo.IsOccupied(nextStepV2Int))
                 {
                     attempts++;
-                    path = GetPathAvoidingAllOccupiedTiles(currentDestination);
+                    if (attempts > maxAttempts) // doesn't currently work properly
+                    {
+
+                        StopOrder();
+                        yield break;
+                    }
+
+                    //broke something here i think?
+
+                    /// ###### THESE ARE BOTH GOOD OPTIONS FOR ASSNING PATH. 
+                   
+
+                    path = GetPathAvoidingTile(nextStepV2Int, currentDestination); // this is better for formation movement.
+                    path = GetPathAvoidingAllOccupiedTiles(currentDestination); // this is better for swarm/flood movement.
                     stepIndex = 1;
                     stuck = true;
+                    Debug.Log("attempts: " + attempts);
 
                     yield return new WaitForSeconds(0.1f);
                     continue;
                 }
 
-                if (!stuck)
+
+                if (!stuck) // redundant?
                 {
                     // check if arrived (again, path may have changed)
-                    if (stepIndex >= path.vectorPath.Count
-                        || stopOrder == true)
+                    if (stepIndex >= path.vectorPath.Count)
                     {
 
-                        followingPath = false;
-                        followPathCoroutine = false;
-                        shouldMove = false;
+                        StopOrder();
+                        yield break;
                     }
 
-                    if (followingPath)
+                    if (!stopOrder) // redundant?
                     {
                         yield return StartCoroutine(MoveFromToCell(stepFrom, path.vectorPath[stepIndex]));
                     }
                 }
             }           
         }
+
+        Debug.Log("setting coroutine false. Should only happen at coming to a complete halt");
+        followPathCoroutine = false;
+
     }
 
     private IEnumerator Initialize()
