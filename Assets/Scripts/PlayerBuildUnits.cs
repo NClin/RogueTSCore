@@ -19,8 +19,9 @@ public class PlayerBuildUnits : MonoBehaviour
     //private GameObject spwn5;
     [SerializeField] private GameObject extractorBase;
 
-    private MapOccupiedInfoSingleton mapOccupiedInfo;
-    private ResourceNodeMapSingleton _ResourceNodeMap;
+    private MapState mapState;
+    private UnitMap unitMap;
+    private ResourcesMap resourcesMap;
     private PlayerRes playerRes;
     private UnitFactory unitFactory;
 
@@ -39,8 +40,12 @@ public class PlayerBuildUnits : MonoBehaviour
         {
             Debug.LogError("PlayerRes not found");
         }
+
+        mapState = FindObjectOfType<MapState>();
+        Debug.Log("Mapstate is " + mapState);
+        unitMap = mapState.unitMap;
         unitFactory = FindObjectOfType<UnitFactory>();
-        _ResourceNodeMap = FindObjectOfType<ResourceNodeMapSingleton>();
+        resourcesMap = mapState.resourcesMap;
 
         // hardcoded for testing:
         spwn1 = new UnitSpawnInfo();
@@ -98,10 +103,10 @@ public class PlayerBuildUnits : MonoBehaviour
 
 
             Vector2Int clickTile = VectorTools.GetClosestTileCoordinatesV2Int(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            if (_ResourceNodeMap.AddNode(clickTile, 500, ResourceType.Circle)) 
-            {
+            //if (resourcesMap.AddNode(clickTile, 500, ResourceType.Circle)) 
+            //{
 
-            }
+            //}
         }
     }
 
@@ -123,27 +128,21 @@ public class PlayerBuildUnits : MonoBehaviour
         Debug.Log("spawning at " + spawnTarget);
 
 
-        if (_ResourceNodeMap == null)
+        if (resourcesMap == null)
         {
-            _ResourceNodeMap = FindObjectOfType<ResourceNodeMapSingleton>();
+            resourcesMap = mapState.resourcesMap;
         }
-        if (_ResourceNodeMap == null)
+        if (resourcesMap == null)
         {
-            Debug.LogError("_ResourceNodeMap not found");
-        }
-
-        Debug.Log("Node Detected: " + _ResourceNodeMap.IsNodeAt(spawnTarget));
-
-        if (_ResourceNodeMap.IsNodeAt(spawnTarget))
-        {
-            var toSpawn = Instantiate(extractorBase, position, Quaternion.identity);
-            toSpawn.GetComponent<Unit>().team = Team.white;
-            Debug.Log("spawned");
-            return true;
+            Debug.LogError("resourcesMap not found");
         }
 
-        else return false;
+        Debug.Log("Node Detected: " + resourcesMap.IsNodeAt(spawnTarget));
 
+        var toSpawn = Instantiate(extractorBase, position, Quaternion.identity);
+        toSpawn.GetComponent<Unit>().team = Team.white;
+        Debug.Log("spawned");
+        return true;
     }
 
 
@@ -153,19 +152,17 @@ public class PlayerBuildUnits : MonoBehaviour
         Vector2Int spawnTarget = VectorTools.GetClosestTileCoordinatesV2Int(position);
         Debug.Log("spawning at " + spawnTarget);
 
-        if (mapOccupiedInfo == null)
+        if (unitMap == null)
         {
-            mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
+            unitMap = mapState.unitMap;
         }
-        if (mapOccupiedInfo == null)
+        if (unitMap == null)
         {
             Debug.LogError("Could not find mapOccupiedInfo");
         }
 
-        Debug.Log(mapOccupiedInfo.IsOccupied(spawnTarget));
 
-
-        if (mapOccupiedInfo.IsOccupied(spawnTarget))
+        if (unitMap.IsUnitAt(spawnTarget))
         {
             Debug.Log("occupied");
             return false;

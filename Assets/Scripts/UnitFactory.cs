@@ -16,16 +16,17 @@ public class UnitFactory : MonoBehaviour
     /// <returns></returns>
     public GameObject SpawnUnit(UnitSpawnInfo spwnInfo, bool selectable, Vector3 position)
     {
+        position.z = 0;
         GameObject toSpawn = Instantiate(unitBase, position, Quaternion.identity);
-        Unit toSpawnUnitInfo = toSpawn.GetComponent<Unit>();
-        toSpawnUnitInfo.team = spwnInfo.team;
+        Unit toSpawnUnit = toSpawn.GetComponent<Unit>();
+        toSpawnUnit.team = spwnInfo.team;
 
         if (selectable)
         {
             toSpawn.AddComponent<SelectableUnit>();
         }
 
-        toSpawnUnitInfo.SetSpawnValues(spwnInfo.maxHealth, spwnInfo.maxShield);
+        toSpawnUnit.SetSpawnValues(spwnInfo.maxHealth, spwnInfo.maxShield);
 
         if (spwnInfo.range != 0)
         {

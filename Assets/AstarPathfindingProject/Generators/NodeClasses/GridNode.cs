@@ -128,7 +128,16 @@ namespace Pathfinding {
 
 		public override GridNodeBase GetNeighbourAlongDirection (int direction) {
 			if (HasConnectionInDirection(direction)) {
+
+
 				GridGraph gg = GetGridGraph(GraphIndex);
+
+				if (NodeInGridIndex + gg.neighbourOffsets[direction] > gg.nodes.Length) // check added by ThisIsWater
+				{
+					return null;
+				}
+
+				
 				return gg.nodes[NodeInGridIndex+gg.neighbourOffsets[direction]];
 			}
 			return null;
@@ -162,6 +171,12 @@ namespace Pathfinding {
 
 			for (int i = 0; i < 8; i++) {
 				if (HasConnectionInDirection(i)) {
+
+					if (NodeInGridIndex + neighbourOffsets[i] > nodes.Length) // check added by ThisIsWater
+					{
+						continue;
+					}
+
 					GridNode other = nodes[NodeInGridIndex + neighbourOffsets[i]];
 					if (other != null) action(other);
 				}
@@ -254,6 +269,13 @@ namespace Pathfinding {
 			var index = NodeInGridIndex;
 			for (int i = 0; i < 8; i++) {
 				if (HasConnectionInDirection(i)) {
+
+					if (index + neighbourOffsets[i] > nodes.Length) // check added by ThisIsWater
+					{
+						continue;
+					}
+
+
 					GridNode other = nodes[index + neighbourOffsets[i]];
 					PathNode otherPN = handler.GetPathNode(other);
 					if (otherPN.parent == pathNode && otherPN.pathID == pid) other.UpdateRecursiveG(path, otherPN, handler);
@@ -804,6 +826,12 @@ namespace Pathfinding {
 
 				for (int i = 0; i < 8; i++) {
 					if (HasConnectionInDirection(i)) {
+
+						if (index + neighbourOffsets[i] > nodes.Length) // check added by ThisIsWater
+                        {
+							continue;
+                        }
+
 						GridNode other = nodes[index + neighbourOffsets[i]];
 						if (!path.CanTraverse(other)) continue;
 

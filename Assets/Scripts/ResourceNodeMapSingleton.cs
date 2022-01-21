@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Map))]
+// broken by MapInfo changes should be easy fix
 
 public class ResourceNodeMapSingleton : MonoBehaviour
 {
@@ -11,7 +11,6 @@ public class ResourceNodeMapSingleton : MonoBehaviour
 
     private ResourceNode?[,] resourceNodeMap;
 
-    private Map map;
 
     public void Awake()
     {
@@ -59,18 +58,9 @@ public class ResourceNodeMapSingleton : MonoBehaviour
 
     private void CheckIntegrity()
     {
-        if (map == null)
-        {
-            map = FindObjectOfType<Map>();
-            map.resourceNodeMapSingleton = this;
-        }
-        if (map == null)
-        {
-            Debug.LogError("Map not found by ResourceNodeMapSingleton. Should be tightly coupled.");
-        }
         if (resourceNodeMap == null)
         {
-            Generate(map.height, map.width);
+            //Generate(map.height, map.width);
         }
     }
 

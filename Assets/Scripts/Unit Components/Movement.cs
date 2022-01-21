@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     bool initialized = false;
     Coroutine initializer;
 
-    MapOccupiedInfoSingleton _mapOccupiedInfo;
+    mapOccupiedInfo _mapOccupiedInfo;
     bool stacks = false;
 
     Path path;
@@ -34,6 +34,7 @@ public class Movement : MonoBehaviour
 
     bool shouldMove;
 
+    bool formationPathing = false;
 
 
 
@@ -53,15 +54,8 @@ public class Movement : MonoBehaviour
         {
             MoveTo(new Vector3(pathDestination.x, pathDestination.y, 0));
             tSpamMoveTo = 0;
-            tSpamMoveToIterations++; // when is this reset?
+            tSpamMoveToIterations++; // when is this reset? in stopOrder. See if that works.
         }
-
-        if (shouldMove)
-        {
-            GetComponent<SpriteRenderer>().color = Color.red;
-        }
-        else { GetComponent<SpriteRenderer>().color = Color.white; }
-
     }
 
     private void OnDrawGizmos()
@@ -75,10 +69,12 @@ public class Movement : MonoBehaviour
     {
         followPathCoroutine = false;
         stopOrder = true;
+        tSpamMoveToIterations = 0;
     }
 
-    public void MoveTo(Vector3 input)
+    public void MoveTo(Vector3 input, bool formationPathing = false)
     {
+        this.formationPathing = formationPathing;
         shouldMove = true;
         stopOrder = false;
         Debug.Log(stopOrder);
@@ -100,7 +96,7 @@ public class Movement : MonoBehaviour
     }
 
     /// <summary>
-    /// I don't understand how this works and will have to rework it.
+    /// I don't understand how this works and will probably have to rework it.
     /// </summary>
     /// <returns></returns>
     private IEnumerator FollowPathCoroutine()
@@ -147,20 +143,22 @@ public class Movement : MonoBehaviour
                 if (_mapOccupiedInfo.IsOccupied(nextStepV2Int))
                 {
                     attempts++;
-                    if (attempts > maxAttempts) // doesn't currently work properly
+                    if (attempts > maxAttempts)
                     {
 
                         StopOrder();
                         yield break;
                     }
 
-                    //broke something here i think?
-
-                    /// ###### THESE ARE BOTH GOOD OPTIONS FOR ASSNING PATH. 
-                   
-
-                    path = GetPathAvoidingTile(nextStepV2Int, currentDestination); // this is better for formation movement.
-                    path = GetPathAvoidingAllOccupiedTiles(currentDestination); // this is better for swarm/flood movement.
+                    /// THESE ARE BOTH GOOD OPTIONS FOR ASSIGNING PATH. 
+                    if (formationPathing)
+                    {
+                        path = GetPathAvoidingTile(nextStepV2Int, currentDestination); // this is better for formation movement.
+                    }
+                    else
+                    {
+                        path = GetPathAvoidingAllOccupiedTiles(currentDestination); // this is better for swarm/flood movement.
+                    }
                     stepIndex = 1;
                     stuck = true;
                     Debug.Log("attempts: " + attempts);
@@ -198,7 +196,7 @@ public class Movement : MonoBehaviour
         yield return new WaitForEndOfFrame();
 
         t = 0;
-        _mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
+        _mapOccupiedInfo = FindObjectOfType<mapOccupiedInfo>();
         if (_mapOccupiedInfo == null)
         {
             Debug.LogError("MapOccupiedInfo not found, critical failure.");
@@ -226,7 +224,7 @@ public class Movement : MonoBehaviour
 
     private void Occupy(Vector2Int tile)
     {
-        _mapOccupiedInfo.Occupy(tile);
+        _mapOccupiedInfo.Occupy(tile, gameObject);
         currentOccupied = tile;
     }
 

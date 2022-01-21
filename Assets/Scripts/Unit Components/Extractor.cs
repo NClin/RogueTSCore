@@ -6,7 +6,6 @@ using UnityEngine;
 public class Extractor : MonoBehaviour
 {
     private ResourceNode? extractionNode;
-
     private Vector2Int myTile;
 
     [SerializeField]
@@ -16,15 +15,13 @@ public class Extractor : MonoBehaviour
     [SerializeField]
     private bool active;
 
-
-    private float t;
     private bool extracting;
 
 
     private void Start()
     {
         myTile = VectorTools.GetClosestTileCoordinatesV2Int(transform.position);
-        extractionNode = FindObjectOfType<ResourceNodeMapSingleton>().GetNodeAt(myTile);
+        extractionNode = FindObjectOfType<MapState>().resourcesMap.GetNodeAt(myTile);
         if (extractionNode == null)
         {
             NodeEmpty();

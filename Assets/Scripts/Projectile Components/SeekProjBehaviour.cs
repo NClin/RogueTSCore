@@ -28,7 +28,7 @@ public class SeekProjBehaviour : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + transform.up * speed);
+        Gizmos.DrawLine(transform.position, transform.position + currentVelocity);
     }
 
     void Update()

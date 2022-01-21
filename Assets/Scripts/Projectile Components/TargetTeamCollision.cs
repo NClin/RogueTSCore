@@ -12,6 +12,10 @@ public class TargetTeamCollision : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         var target = GetComponent<HasTarget>().target;
+        if (target==null)
+        {
+            return;
+        }
 
         if (target.GetComponent<Unit>() != null)
         {

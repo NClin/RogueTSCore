@@ -20,7 +20,7 @@ public class Unit : MonoBehaviour
     [SerializeField]
     private int maxShield;
 
-    private MapOccupiedInfoSingleton mapOccupiedInfo;
+    private mapOccupiedInfo mapOccupiedInfo;
 
     public Team team;
     private bool spawned = false;

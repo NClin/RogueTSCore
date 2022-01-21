@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Shapes;
+using Pathfinding;
 
 /// <summary>
 /// Selects and deselects selectable units based on input.
@@ -11,6 +12,7 @@ public class SelectionManager : MonoBehaviour
 {
     
     private List<SelectableUnit> selectedUnits;
+    private List<SelectableUnit> pathCallbackTargets;
     [SerializeField]
     private float longClickThreshold = 0.05f;
     [SerializeField]
@@ -25,24 +27,26 @@ public class SelectionManager : MonoBehaviour
     Vector3 longClickEnd;
 
 
+
+
     [SerializeField]
     GameObject selectionBox;
     private GameObject? selectionBoxInstance;
     List<GameObject> selectionBoxes;
 
-    private FormationStamp formationstamp;
+    //private FormationStamp formationstamp; // temporarily deprecated?
 
 
     void Start()
     {
         selectedUnits = new List<SelectableUnit>();
         selectionBoxes = new List<GameObject>();
-        formationstamp = GetComponent<FormationStamp>();
-        if (formationstamp == null)
-        {
-            Debug.Log("added formationstamp");
-            gameObject.AddComponent<FormationStamp>();
-        }
+        //formationstamp = GetComponent<FormationStamp>();
+        //if (formationstamp == null)
+        //{
+        //    Debug.Log("added formationstamp");
+        //    gameObject.AddComponent<FormationStamp>();
+        //}
     }
 
     void Update()
@@ -107,7 +111,9 @@ public class SelectionManager : MonoBehaviour
         var boxExtents = VectorTools.GetBoxExtents(start, end);
 
         var potentials = Physics.OverlapBox(boxCenter, boxExtents/2);
-        
+
+        ClearSelection();
+
         Debug.Log(potentials.Length + " overlaps");
         foreach (Collider potential in potentials)
         {
@@ -225,7 +231,7 @@ public class SelectionManager : MonoBehaviour
             if (longClick)
             {
                 longClickCurrent = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                formationstamp.StampLine(longClickStart, longClickCurrent);
+                //formationstamp.StampLine(longClickStart, longClickCurrent);
             }
 
         }
@@ -244,7 +250,7 @@ public class SelectionManager : MonoBehaviour
             }
             mouse1held = false;
             mouse1heldTime = 0;
-            formationstamp.ClearStamp();
+            //formationstamp.ClearStamp();
             longClick = false;
         }
 
@@ -254,9 +260,9 @@ public class SelectionManager : MonoBehaviour
             {
                 foreach (SelectableUnit unit in selectedUnits)
                 {
-                    if (unit.GetComponent<Movement>())
+                    if (unit.GetComponent<MovementUpdated>())
                     {
-                        unit.GetComponent<Movement>().StopOrder();
+                        unit.GetComponent<MovementUpdated>().StopOrder();
                     }
                 }
             }
@@ -270,12 +276,25 @@ public class SelectionManager : MonoBehaviour
         {
             foreach (SelectableUnit unit in selectedUnits)
             {
-                if (unit.GetComponent<Movement>())
+                if (unit == null) { continue; }
+
+                //var seeker = unit.GetComponent<Seeker>();
+                //if (seeker != null)
+                //{
+                //    seeker.StartPath(seeker.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), OnPathCallback);
+                //}
+
+                if (unit.GetComponent<MovementStripped>())
                 {
-                    unit.GetComponent<Movement>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+                    unit.GetComponent<MovementStripped>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
                 }
             }
         }
+    }
+
+    public void OnPathCallback(Path p)
+    {
+
     }
 
     private void DoLongRightClick()
@@ -306,7 +325,7 @@ public class SelectionManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f * row);
             }
 
-            unit.GetComponent<Movement>().MoveTo(linePositions[i] + row * rowTranslation);
+            unit.GetComponent<MovementUpdated>().MoveTo(linePositions[i] + row * rowTranslation);
             i++;
         }
 

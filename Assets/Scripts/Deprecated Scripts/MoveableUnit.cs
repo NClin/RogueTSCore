@@ -32,7 +32,7 @@ public class MoveableUnit : MonoBehaviour
     private float arrivalThreshold = 0.001f;
     private Vector2Int occupiedTile;
     private bool isMoving;
-    private MapOccupiedInfoSingleton mapOccupiedInfo;
+    private mapOccupiedInfo mapOccupiedInfo;
 
     private bool initialized = false;
 
@@ -93,7 +93,7 @@ public class MoveableUnit : MonoBehaviour
         moveTarget.position = transform.position;
         seeker = GetComponent<Seeker>();
 
-        mapOccupiedInfo = FindObjectOfType<MapOccupiedInfoSingleton>();
+        mapOccupiedInfo = FindObjectOfType<mapOccupiedInfo>();
         TeleportTo(ClosestTileCoordinates(transform.position));
         stepVector = transform.position;
         previousStepVector = transform.position;
@@ -142,7 +142,7 @@ public class MoveableUnit : MonoBehaviour
         {
             OccupyClosestTile(ClosestTileCoordinatesV3(transform.position));
         }
-        mapOccupiedInfo.Occupy(occupiedTile);
+        mapOccupiedInfo.Occupy(occupiedTile, gameObject);
 
         Debug.Log(mapOccupiedInfo.IsOccupied(occupiedTile));
     }
@@ -435,7 +435,7 @@ public class MoveableUnit : MonoBehaviour
         }
 
         occupiedTile = newTileVector;
-        mapOccupiedInfo.Occupy(occupiedTile);
+        mapOccupiedInfo.Occupy(occupiedTile, gameObject);
     }
 
     public void TeleportTo(Vector2Int targetTile)
