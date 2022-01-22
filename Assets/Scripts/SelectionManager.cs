@@ -240,7 +240,7 @@ public class SelectionManager : MonoBehaviour
         {
             if (longClick && Vector3.Distance(longClickStart, longClickCurrent) > minMouseMovement)
             {
-                StartCoroutine(LineFormationMovement(longClickStart, longClickCurrent, selectedUnits));
+                StartCoroutine(LineAbreastFormationMovement(longClickStart, longClickCurrent, selectedUnits));
 
                 DoLongRightClick();
             }
@@ -278,12 +278,6 @@ public class SelectionManager : MonoBehaviour
             {
                 if (unit == null) { continue; }
 
-                //var seeker = unit.GetComponent<Seeker>();
-                //if (seeker != null)
-                //{
-                //    seeker.StartPath(seeker.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), OnPathCallback);
-                //}
-
                 if (unit.GetComponent<MovementStripped>())
                 {
                     unit.GetComponent<MovementStripped>().MoveTo(Camera.main.ScreenToWorldPoint(Input.mousePosition));
@@ -302,13 +296,11 @@ public class SelectionManager : MonoBehaviour
         // some kind of formation move order.
     }
 
-    private IEnumerator LineFormationMovement(Vector3 lineStart, Vector3 lineEnd, List<SelectableUnit> units)
+    private IEnumerator LineAbreastFormationMovement(Vector3 lineStart, Vector3 lineEnd, List<SelectableUnit> units)
     {
         var linePositions = VectorTools.BesenhamLine(VectorTools.GetClosestTileCoordinatesV2Int(lineStart),
             VectorTools.GetClosestTileCoordinatesV2Int(lineEnd));
         
-        FormationStamp stamp = GetComponent<FormationStamp>();
-        stamp.StampLine(lineStart, lineEnd);
 
         Vector2 rowTranslation = VectorTools.GetVectorFormationRowTranslation(lineStart, lineEnd);
 
@@ -325,7 +317,7 @@ public class SelectionManager : MonoBehaviour
                 yield return new WaitForSeconds(0.1f * row);
             }
 
-            unit.GetComponent<MovementUpdated>().MoveTo(linePositions[i] + row * rowTranslation);
+            unit.GetComponent<MovementStripped>().MoveTo(linePositions[i] + row * rowTranslation);
             i++;
         }
 

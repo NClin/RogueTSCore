@@ -23,7 +23,6 @@ public class SeekProjBehaviour : MonoBehaviour
     {
         target = GetComponent<HasTarget>().target;
         currentVelocity = transform.up * speed;
-        Debug.Log("currentVelocity = " + currentVelocity);
     }
 
     private void OnDrawGizmos()

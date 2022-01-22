@@ -8,32 +8,40 @@ using UnityEngine;
 public class MapState : MonoBehaviour
 {
     [HideInInspector]
-    public MapInfo tileTypeMap;
+    public TileTypeMap tileTypeMap;
     [HideInInspector]
     public UnitMap unitMap;
     [HideInInspector]
     public ResourcesMap resourcesMap;
 
-    private MapTileHandler mapTileHandler;
+
+    private LineOfSight lineOfSight;
+    private TiledTexturesCreateIndexTexture TileTypeIndexTextureCreator;
+    private PathfindingHandler pathfindingHandler;
 
     /// <summary>
     /// Sets entire map to given TileTypeMap. To be called by generation scripts.
     /// </summary>
     /// <param name="mapToSet"></param>
-    public void SetTileTypeMap(MapInfo mapToSet)
+    public void SetTileTypeMap(TileTypeMap mapToSet)
     {
-        tileTypeMap = mapToSet;
-        unitMap = new UnitMap(tileTypeMap.Height(), tileTypeMap.Width());
-        resourcesMap = new ResourcesMap(tileTypeMap.Height(), tileTypeMap.Width());
+        int width = mapToSet.Width();
+        int height = mapToSet.Height();
+
+        unitMap = new UnitMap(mapToSet.Height(), mapToSet.Width());
+        resourcesMap = new ResourcesMap(mapToSet.Height(), mapToSet.Width());
+        lineOfSight = FindObjectOfType<LineOfSight>();
+        lineOfSight.InitializeLoS(mapToSet.Height(), mapToSet.Width());
+        TileTypeIndexTextureCreator.GenerateFromTileTypeMap(mapToSet);
+        pathfindingHandler.UpdateAllTiles(mapToSet);
     }
 
     private void Start()
     {
-        mapTileHandler = FindObjectOfType<MapTileHandler>();
-        if (mapTileHandler == null)
-        {
-            Debug.LogError("No map tile placer found by mapstate");
-        }
+        TileTypeIndexTextureCreator = FindObjectOfType<TiledTexturesCreateIndexTexture>();
+        pathfindingHandler = FindObjectOfType<PathfindingHandler>();
     }
+
+
 
 }

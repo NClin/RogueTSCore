@@ -22,7 +22,7 @@ public class MapTilePlacer : MonoBehaviour
         pathfindingGridScanner = new PathfindingGridScanner();
     }
 
-    public void InstantiateMap(MapInfo mapToGenerate)
+    public void InstantiateMap(TileTypeMap mapToGenerate)
     {
         int width = mapToGenerate.GetDimensions().x;
         int height = mapToGenerate.GetDimensions().y;
@@ -43,7 +43,6 @@ public class MapTilePlacer : MonoBehaviour
                     wallCount++;
                     placed.colliderType = Tile.ColliderType.Grid;
                     placed.color = Color.black;
-                    Debug.Log(placed.debug);
                 }
                 if (mapToGenerate.GetTileType(new Vector2Int(pos.x, pos.y)) == TileType.empty)
                 {

@@ -12,7 +12,7 @@ public class MapTileHandler : MonoBehaviour
     private PathfindingHandler pathfindingHandler;
 
     private Dictionary<TileType, Color> tileTypeColors = new Dictionary<TileType, Color>();
-
+    private Dictionary<TileType, int> tileTypeLayers = new Dictionary<TileType, int>();
 
 
 
@@ -24,11 +24,18 @@ public class MapTileHandler : MonoBehaviour
             Debug.LogError("pathfindingHandler not found");
         }
 
+
+        // tile color definitions
         tileTypeColors.Add(TileType.empty, Color.yellow / 2);
         tileTypeColors.Add(TileType.wall, Color.blue / 2);
+
+
+        // tile layer definitions
+        tileTypeLayers.Add(TileType.empty, 6);
+        tileTypeLayers.Add(TileType.wall, 7);
     }
 
-    public void InstantiateMap(MapInfo mapToGenerate)
+    public void InstantiateMap(TileTypeMap mapToGenerate)
     {
         int width = mapToGenerate.GetDimensions().x;
         int height = mapToGenerate.GetDimensions().y;
@@ -56,6 +63,8 @@ public class MapTileHandler : MonoBehaviour
                 }
             }
         }
+
+        pathfindingHandler.ScanGraphCorners(width, height);
     }
 
     public void SetTileColor(Vector2Int tile, Color color)
@@ -75,9 +84,25 @@ public class MapTileHandler : MonoBehaviour
         mapTiles[tile.x, tile.y].GetComponent<MapTileContainer>().mapTile.tiletype = tileType;
         pathfindingHandler.UpdateTileToType(tile, tileType);
 
+        if (tileType == TileType.wall)
+        {
+            SetTileCollisionLayer(tile, 7);
+        }
+        else
+        {
+            SetTileCollisionLayer(tile, 6);
+        }
+
         Color col;
         tileTypeColors.TryGetValue(tileType, out col);
         SetTileColor(tile, col);
     }
+
+    private void SetTileCollisionLayer(Vector2Int tile, int layerID)
+    {
+        mapTiles[tile.x, tile.y].layer = layerID;
+    }
+
+    
 }
 

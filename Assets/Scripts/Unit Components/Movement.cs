@@ -52,6 +52,7 @@ public class Movement : MonoBehaviour
             && tSpamMoveTo > spamMoveToFrequency
             && tSpamMoveToIterations < tSpamMoveToIterationsMax)
         {
+            Debug.Log("spammoveto");
             MoveTo(new Vector3(pathDestination.x, pathDestination.y, 0));
             tSpamMoveTo = 0;
             tSpamMoveToIterations++; // when is this reset? in stopOrder. See if that works.
@@ -74,10 +75,10 @@ public class Movement : MonoBehaviour
 
     public void MoveTo(Vector3 input, bool formationPathing = false)
     {
+        Debug.Log("MoveTo" + input);
         this.formationPathing = formationPathing;
         shouldMove = true;
         stopOrder = false;
-        Debug.Log(stopOrder);
         stuck = false;
         pathDestination = new Vector2Int((int)ClosestTileCoordinatesV3(input).x, (int)ClosestTileCoordinatesV3(input).y);
 
@@ -213,8 +214,8 @@ public class Movement : MonoBehaviour
         var closest = ClosestTileCoordinatesV3(transform.position);
         transform.position = closest;
         stepFrom = new Vector2Int ((int)closest.x, (int)closest.y);
-        
         Occupy(stepFrom);
+        pathDestination = new Vector2Int((int)closest.x, (int)closest.y);
     }
 
     public void Die()

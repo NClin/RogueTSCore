@@ -194,5 +194,18 @@ public static class VectorTools
         return formationRowTranslation;
     }
 
+    public static bool ExistsNeighbor(Vector2Int tile, int width, int height, Vector2Int direction)
+    {
+        if ((tile + direction).x < 0
+            || (tile + direction).x >= width
+            || (tile + direction).y < 0
+            || (tile + direction).y >= height
+            )
+        {
+            return false;
+        }
+        else
+            return true;
+    }
 
 }

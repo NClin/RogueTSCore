@@ -10,7 +10,7 @@ using UnityEngine.Tilemaps;
 public class MapGeneratorCellularAutomata : MonoBehaviour
 {
     Tilemap tilemap;
-    MapInfo map;
+    TileTypeMap map;
 
     [SerializeField]
     Tile wallTile;

@@ -9,7 +9,6 @@ public class MovementStripped : MonoBehaviour
     public float moveSpeed;
 
     bool initialized = false;
-    Coroutine initializer;
 
     UnitMap unitMap;
     bool stacks = false;
@@ -38,13 +37,13 @@ public class MovementStripped : MonoBehaviour
 
     bool formationPathing = false;
 
+    private void Start()
+    {
+        Initialize();
+    }
 
     void Update()
     {
-        if (!initialized && initializer == null)
-        {
-            initializer = StartCoroutine(Initialize());
-        }
 
         tSpamMoveTo += Time.deltaTime;
 
@@ -217,11 +216,9 @@ public class MovementStripped : MonoBehaviour
 
     }
 
-    private IEnumerator Initialize()
+    private void Initialize()
     {
-        yield return new WaitForEndOfFrame();
 
-        t = 0;
         unitMap = FindObjectOfType<MapState>().unitMap;
         if (unitMap == null)
         {
@@ -230,6 +227,8 @@ public class MovementStripped : MonoBehaviour
 
         SnapToNearestTile();
 
+        t = 0;
+    
         initialized = true;
 
     }
@@ -239,8 +238,8 @@ public class MovementStripped : MonoBehaviour
         var closest = ClosestTileCoordinatesV3(transform.position);
         transform.position = closest;
         stepFrom = new Vector2Int((int)closest.x, (int)closest.y);
-
         Occupy(stepFrom);
+        MoveTo(closest);
     }
 
     public void Die()

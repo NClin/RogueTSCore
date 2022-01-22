@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,6 +14,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float zoomSpeed;
     private float zoomFactor;
+    public bool moveMode;
+    [SerializeField]
+    private GameObject core;
 
     void Awake()
     {
@@ -22,6 +26,29 @@ public class CameraController : MonoBehaviour
     }
 
     void Update()
+    {
+        moveMode = core.GetComponent<CoreController>().GetDeployed();
+
+        if (moveMode) { WSADmovement(); }
+        
+        if (!moveMode) { FollowCore(); }
+
+        if (Input.mouseScrollDelta != Vector2.zero)
+        {
+            // TODO: set these as targets, and use a lerp coroutine to zoom the camera smoothly
+            cam.orthographicSize -= Input.mouseScrollDelta.y * Input.mouseScrollDelta.y * Input.mouseScrollDelta.y * zoomSpeed * Time.deltaTime;
+            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 2, 40f);
+
+            SetZoomFactor();
+        }
+    }
+
+    void FollowCore()
+    {
+        transform.position = new Vector3(core.transform.position.x, core.transform.position.y, transform.position.z);
+    }
+
+    private void WSADmovement()
     {
         if (Input.GetKey(KeyCode.W))
         {
@@ -41,15 +68,6 @@ public class CameraController : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             cam.transform.position += Vector3.right * keyMoveSpeed * zoomFactor * Time.deltaTime;
-        }
-
-        if (Input.mouseScrollDelta != Vector2.zero)
-        {
-            // TODO: set these as targets, and use a lerp coroutine to zoom the camera smoothly
-            cam.orthographicSize -= Input.mouseScrollDelta.y * Input.mouseScrollDelta.y * Input.mouseScrollDelta.y * zoomSpeed * Time.deltaTime;
-            cam.orthographicSize = Mathf.Clamp(cam.orthographicSize, 2, 40f);
-
-            SetZoomFactor();
         }
     }
 

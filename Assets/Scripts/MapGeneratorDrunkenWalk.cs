@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class MapGeneratorDrunkenWalk
 {
-    public MapInfo RandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 25, int walkWidth = 1)
+    public TileTypeMap RandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 25, int walkWidth = 1)
     {
         return DoRandomWalk(width, height, approxCoveragePercent, maxWalk, walkWidth);
     }
 
 
-    private MapInfo DoRandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 25, int walkWidth = 1)
+    private TileTypeMap DoRandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 25, int walkWidth = 1)
     {
-        MapInfo mapInfo = new MapInfo(width, height);
+        TileTypeMap mapInfo = new TileTypeMap(width, height);
 
         if (approxCoveragePercent > 100)
         {
@@ -66,6 +66,13 @@ public class MapGeneratorDrunkenWalk
             {
                 step = new Vector2Int(currentTile.x + 1, currentTile.y);
                 mapInfo.SetTileType(TileType.empty, step);
+                //for (int i = 0; i < walkWidth; i++)
+                //{
+                //    if (VectorTools.IsExistsRelativeTile(currentTile, width, height, Vector2Int.right * i))
+                //    {
+                //        mapInfo.SetTileType(TileType.empty, step + Vector2Int.right * i);
+                //    }
+                //}
                 totalStepsTaken++;
                 currentTile = step;
                 currentWalkLength++;
@@ -99,7 +106,25 @@ public class MapGeneratorDrunkenWalk
 
         }
 
+        // remove isolated wall tiles
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                Vector2Int tile = new Vector2Int(x, y);
+
+                if (mapInfo.GetTileType(tile) == TileType.wall)
+                {
+                    var neighborTileTypes = mapInfo.GetNeighborTileTypes(tile);
+                }
+                
+            }
+        }
         return mapInfo;
     }
-}
+
+
+    
+    }
 

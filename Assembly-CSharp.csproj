@@ -70,11 +70,12 @@
     <Compile Include="Assets\MapTileContainer.cs" />
     <Compile Include="Assets\Scripts\PathfindingGridScanner.cs" />
     <Compile Include="Assets\Scripts\ResourceType.cs" />
-    <Compile Include="Assets\MapRework\TileTypeMap.cs" />
+    <Compile Include="Assets\MapRework\TileTypeMapDeprecated.cs" />
     <Compile Include="Assets\Scripts\Scanner.cs" />
     <Compile Include="Assets\Scripts\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\CoreController.cs" />
     <Compile Include="Assets\SilexarsMaintainAspect.cs" />
     <Compile Include="Assets\Scripts\PlayerBuildUnits.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -83,10 +84,12 @@
     <Compile Include="Assets\Scripts\SquareMapGenerator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+    <Compile Include="Assets\ScaleLoSMesh.cs" />
     <Compile Include="Assets\Scripts\SpawnUnitNearby.cs" />
     <Compile Include="Assets\tileGradientTwinkle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scripts\Unit Components\SelectableUnit.cs" />
+    <Compile Include="Assets\LoSTest.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\FormationStamp.cs" />
@@ -100,7 +103,7 @@
     <Compile Include="Assets\MapRework\MovementStripped.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
     <Compile Include="Assets\PathfindingHandler.cs" />
-    <Compile Include="Assets\Scripts\MapInfo.cs" />
+    <Compile Include="Assets\Scripts\TileTypeMap.cs" />
     <Compile Include="Assets\TargetingModule.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Singletons.cs" />
@@ -120,6 +123,7 @@
     <Compile Include="Assets\Scripts\Projectile Components\TargetTeamCollision.cs" />
     <Compile Include="Assets\MapRework\MapGenerationHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\OptimizeAtDistance.cs" />
     <Compile Include="Assets\AttackMoveBehaviour.cs" />
     <Compile Include="Assets\Graphics\MeshGenerator\GenerateQuadMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
@@ -131,6 +135,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scripts\Unit Components\TargetClosestModule.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Targetable.cs" />
+    <Compile Include="Assets\ResourceNodeHandler.cs" />
     <Compile Include="Assets\Scripts\ResourceNodeMapSingleton.cs" />
     <Compile Include="Assets\coroutineAnalysis.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\TargetCollision.cs" />
@@ -149,6 +154,7 @@
     <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\moveforward.cs" />
+    <Compile Include="Assets\SetTextureTest.cs" />
     <Compile Include="Assets\SelectionBoxHack.cs" />
     <Compile Include="Assets\MapRework\MovementUpdated.cs" />
     <Compile Include="Assets\gridlabels.cs" />
@@ -157,8 +163,9 @@
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\StraightProjBehaviour.cs" />
     <Compile Include="Assets\Scripts\Unit Components\RadialWeapon.cs" />
+    <Compile Include="Assets\LineOfSight.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\MoveableUnit.cs" />
-    <Compile Include="Assets\MapTilePlacerMK2.cs" />
+    <Compile Include="Assets\LineOfSight\UnitLineOfSight.cs" />
     <Compile Include="Assets\Scripts\MapGeneratorDrunkenWalk.cs" />
     <Compile Include="Assets\Scripts\MapTilePlacer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -173,6 +180,8 @@
     <Compile Include="Assets\MapRework\UnitMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
+    <Compile Include="Assets\MapRework\TileMapTileHandler.cs" />
+    <Compile Include="Assets\TiledTexturesCreateIndexTexture.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />
@@ -186,6 +195,7 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Texture Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Rect ColorDodge.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cuboid Screen.shader" />
+     <None Include="Assets\LineOfSight\Unlitr.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 2D Subtractive.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Rect Lighten.shader" />
      <None Include="Assets\Graphics\LowerTIle.shader" />
@@ -301,6 +311,8 @@
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Subtractive.shader" />
+     <None Include="Assets\LineOfSight\LoS.shader" />
+     <None Include="Assets\Graphics\SimpleTransparency.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Opaque.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Screen.shader" />

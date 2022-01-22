@@ -11,13 +11,18 @@ public class PathfindingHandler : MonoBehaviour
     AstarData astarData;
     GridGraph gridGraph;
 
+    public void GenerateAndScanGraph(int width, int height)
+    {
+        GenerateGraph(width, height);
+        ScanGraphCorners(width, height);
+    }
+
     public void GenerateGraph(int width, int height)
     {
         astarData = AstarPath.active.data;
         gridGraph = astarData.AddGraph(typeof(GridGraph)) as GridGraph;
         gridGraph.SetDimensions(width, height, 1);
         gridGraph.is2D = true;
-        gridGraph.cutCorners = true;
 
         float xOffset = width % 2 == 0 ? -0.5f : 0;
         float yOffset = height % 2 == 0 ? -0.5f : 0;
@@ -40,9 +45,11 @@ public class PathfindingHandler : MonoBehaviour
         ///         |
         /// 
 
-        for (int x = 0; x < width - 1; x++)
+
+
+        for (int x = 0; x < width; x++)
         {
-            for (int y = 0; y < height - 1; y++)
+            for (int y = 0; y < height; y++)
             {
                 GridNode toSet = (GridNode)gridGraph.GetNode(x, y);
 
@@ -84,18 +91,30 @@ public class PathfindingHandler : MonoBehaviour
                 }
 
 
-                // remove corner connections
+            }
+        }
+    }
+
+     public void ScanGraphCorners(int width, int height)
+    {
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                GridNode toSet = (GridNode)gridGraph.GetNode(x, y);
+                //remove corner connections
                 if (x != 0 && gridGraph.GetNode(x - 1, y).Walkable == false)
                 {
                     gridGraph.SetNodeConnection(toSet, 6, false);
                     gridGraph.SetNodeConnection(toSet, 7, false);
                 }
-                if (x != width - 1 && gridGraph.GetNode(x+1, y).Walkable == false)
+                if (x != width - 1 && gridGraph.GetNode(x + 1, y).Walkable == false)
                 {
                     gridGraph.SetNodeConnection(toSet, 5, false);
                     gridGraph.SetNodeConnection(toSet, 4, false);
                 }
-                if (y != 0 && gridGraph.GetNode(x, y-1).Walkable == false)
+                if (y != 0 && gridGraph.GetNode(x, y - 1).Walkable == false)
                 {
                     gridGraph.SetNodeConnection(toSet, 7, false);
                     gridGraph.SetNodeConnection(toSet, 4, false);
@@ -105,12 +124,9 @@ public class PathfindingHandler : MonoBehaviour
                     gridGraph.SetNodeConnection(toSet, 6, false);
                     gridGraph.SetNodeConnection(toSet, 5, false);
                 }
-
-
             }
         }
     }
-
 
     public void SetWalkable(Vector2Int tile)
     {
@@ -141,5 +157,26 @@ public class PathfindingHandler : MonoBehaviour
         {
             SetWalkable(tile);
         }
+    }
+
+    public void UpdateAllTiles(TileTypeMap tileTypeMap)
+    {
+        var dimensions = tileTypeMap.GetDimensions();
+
+        if (gridGraph == null)
+        {
+            GenerateGraph(dimensions.x, dimensions.y);
+        }
+        
+        for (int x = 0; x < dimensions.x; x++)
+        {
+            for (int y = 0; y < dimensions.y; y++)
+            {
+                var currentTile = new Vector2Int(x, y);
+                UpdateTileToType(currentTile, tileTypeMap.GetTileType(currentTile));
+            }
+        }
+
+        ScanGraphCorners(dimensions.x, dimensions.y);
     }
 }

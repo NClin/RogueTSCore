@@ -24,6 +24,7 @@ public class PlayerBuildUnits : MonoBehaviour
     private ResourcesMap resourcesMap;
     private PlayerRes playerRes;
     private UnitFactory unitFactory;
+    private CoreController coreController;
 
     /// <summary>
     /// Tmp hack
@@ -36,13 +37,8 @@ public class PlayerBuildUnits : MonoBehaviour
         EnforceSingleton();
 
         playerRes = GetComponent<PlayerRes>();
-        if (playerRes == null)
-        {
-            Debug.LogError("PlayerRes not found");
-        }
-
+        coreController = FindObjectOfType<CoreController>();
         mapState = FindObjectOfType<MapState>();
-        Debug.Log("Mapstate is " + mapState);
         unitMap = mapState.unitMap;
         unitFactory = FindObjectOfType<UnitFactory>();
         resourcesMap = mapState.resourcesMap;
@@ -74,9 +70,16 @@ public class PlayerBuildUnits : MonoBehaviour
 
     private void Update()
     {
+
+        if (coreController.GetDeployed()) { DoInput(); }
+
+    }
+
+    private void DoInput()
+    {
         if (Input.GetKeyDown(k1) && CanAfford(spwn1)) // rework this expenditure system? is simple though.
         {
-            if(spawnUnit(spwn1, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            if (spawnUnit(spwn1, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
                 playerRes.SpendMoney(spwn1.cost);
             }
