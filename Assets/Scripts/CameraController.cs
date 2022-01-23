@@ -17,9 +17,25 @@ public class CameraController : MonoBehaviour
     public bool moveMode;
     [SerializeField]
     private GameObject core;
+    [SerializeField]
+    bool requireCore;
 
     void Awake()
     {
+
+    }
+
+    private void Start()
+    {
+        if (requireCore)
+        {
+            moveMode = core.GetComponent<CoreController>().GetDeployed();
+        }
+        else
+        {
+            moveMode = true;
+        }
+
         cam = GetComponent<Camera>();
         cam.orthographicSize = 8;
         SetZoomFactor();
@@ -27,7 +43,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        moveMode = core.GetComponent<CoreController>().GetDeployed();
+
 
         if (moveMode) { WSADmovement(); }
         

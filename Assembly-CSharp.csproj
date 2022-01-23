@@ -129,6 +129,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
     <Compile Include="Assets\MapRework\MapTileMk2.cs" />
+    <Compile Include="Assets\TiledTexturesCreateIndexTexture.cs" />
     <Compile Include="Assets\Scripts\TileType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Unit Components\MarkTarget.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\moveforward.cs" />
     <Compile Include="Assets\SetTextureTest.cs" />
+    <Compile Include="Assets\MapRework\TileMapTileHandler.cs" />
     <Compile Include="Assets\SelectionBoxHack.cs" />
     <Compile Include="Assets\MapRework\MovementUpdated.cs" />
     <Compile Include="Assets\gridlabels.cs" />
@@ -180,8 +182,6 @@
     <Compile Include="Assets\MapRework\UnitMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\MapRework\TileMapTileHandler.cs" />
-    <Compile Include="Assets\TiledTexturesCreateIndexTexture.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />
