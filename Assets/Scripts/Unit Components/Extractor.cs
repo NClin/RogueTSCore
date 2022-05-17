@@ -79,7 +79,7 @@ public class Extractor : MonoBehaviour
 
             if (GetComponent<Unit>().team == Team.white)
             {
-                FindObjectOfType<PlayerRes>().ChangeMoney(tickAmount);
+                FindObjectOfType<PlayerRes>().ChangeMass(tickAmount);
             }
 
             yield return new WaitForSeconds(frequency);

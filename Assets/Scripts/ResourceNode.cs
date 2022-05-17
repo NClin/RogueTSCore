@@ -9,6 +9,30 @@ public class ResourceNode : MonoBehaviour
     [SerializeField]
     private ResourceType resourceType;
 
+    public bool BeingExtracted;
+
+    bool posSet = false;
+    private Vector2Int _position;
+    public Vector2Int position { 
+        get {
+            return _position;
+        } 
+        set {
+            if (!posSet)
+            {
+                _position = value;
+                posSet = true;
+            }
+        }
+    
+    }
+
+    public ResourceNode(int totalStock, Vector2Int position)
+    {
+        SetStock(totalStock);
+        this.position = position;
+    }
+
     public int ExtractStock(int amount)
     {
         // returns 0 if empty.
@@ -36,9 +60,8 @@ public class ResourceNode : MonoBehaviour
         return resourceType;
     }
 
-    public void SetStock(int totalStock, ResourceType resourceType)
+    public void SetStock(int totalStock)
     {
-        this.resourceType = resourceType;
         stock = totalStock;
     }
 
@@ -53,11 +76,12 @@ public class ResourceNode : MonoBehaviour
 
     public void InitializeAs(ResourceNode toAdd)
     {
-        SetStock(toAdd.GetStock(), toAdd.GetResourceType());
+        SetStock(toAdd.GetStock());
     }
 
-    public void InitializeAs(int stock, ResourceType resourceType)
+    public void InitializeAs(int stock, Vector2Int position)
     {
-        SetStock(stock, resourceType);
+        SetStock(stock);
+        this.position = position;
     }
 }

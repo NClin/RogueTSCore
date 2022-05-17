@@ -44,6 +44,11 @@ public class MovementStripped : MonoBehaviour
 
     void Update()
     {
+        if (!initialized)
+        {
+            Initialize();
+            return;
+        }
 
         tSpamMoveTo += Time.deltaTime;
 
@@ -54,15 +59,8 @@ public class MovementStripped : MonoBehaviour
         {
             MoveTo(new Vector3(pathDestination.x, pathDestination.y, 0));
             tSpamMoveTo = 0;
-            tSpamMoveToIterations++; // when is this reset? in stopOrder. See if that works.
+            tSpamMoveToIterations++;
         }
-    }
-
-    private void OnDrawGizmos()
-    {
-        Handles.Label(transform.position, pathDestination.x + ", " + pathDestination.y);
-
-        Gizmos.DrawLine(new Vector3(pathDestination.x, pathDestination.y, 0), transform.position);
     }
 
     public void StopOrder()
@@ -75,6 +73,7 @@ public class MovementStripped : MonoBehaviour
 
     public void MoveTo(Vector3 input, bool formationPathing = false)
     {
+        Debug.Log("move to " + input);
         newPaths = 0;
         this.formationPathing = formationPathing;
         shouldMove = true;
@@ -222,7 +221,8 @@ public class MovementStripped : MonoBehaviour
         unitMap = FindObjectOfType<MapState>().unitMap;
         if (unitMap == null)
         {
-            Debug.LogError("MapOccupiedInfo not found, critical failure.");
+            initialized = false;
+            return;
         }
 
         SnapToNearestTile();
@@ -328,8 +328,6 @@ public class MovementStripped : MonoBehaviour
         var newPath = ABPath.Construct(start, end, OnGotPath);
         AstarPath.StartPath(newPath);
     }
-
-
 
     private Path GetPathAvoidingAllOccupiedTiles(Vector2Int destination)
     {

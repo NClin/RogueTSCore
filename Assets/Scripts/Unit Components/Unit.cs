@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum Team
@@ -19,8 +16,6 @@ public class Unit : MonoBehaviour
     private int shield;
     [SerializeField]
     private int maxShield;
-
-    private mapOccupiedInfo mapOccupiedInfo;
 
     public Team team;
     private bool spawned = false;

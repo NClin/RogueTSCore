@@ -5,14 +5,21 @@ using UnityEngine;
 
 [RequireComponent(typeof(HasTarget))]
 [RequireComponent(typeof(ProjectileEffects))]
-public class TargetTeamCollision : MonoBehaviour
+public class ProjCollideWithAnyUnitOfTargetTeam_Trigger : MonoBehaviour
 {
     public bool expended = false;
 
+    private void Start()
+    {
+        Debug.Log("trigger proj");
+    }
+
     private void OnTriggerEnter(Collider collider)
     {
+        Debug.Log("Collided");
+
         var target = GetComponent<HasTarget>().target;
-        if (target==null)
+        if (target == null)
         {
             return;
         }
@@ -21,9 +28,13 @@ public class TargetTeamCollision : MonoBehaviour
         {
             Team targetTeam = target.GetComponent<Unit>().team;
 
+            Debug.Log("team: " + targetTeam);
+
             if (collider.gameObject.GetComponent<Unit>() != null)
             {
-                Team colTeam = collider.GetComponent<Unit>().team;
+                Team colTeam = collider.gameObject.GetComponent<Unit>().team;
+
+                Debug.Log("collision team: " + colTeam);
 
                 if (colTeam == targetTeam
                     && expended == false)
@@ -35,3 +46,4 @@ public class TargetTeamCollision : MonoBehaviour
         }
     }
 }
+

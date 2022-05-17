@@ -10,14 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 2500288856230070221}
   - component: {fileID: 3289031329220127128}
-  - component: {fileID: 3910317166740030694}
   - component: {fileID: 7350492282900606392}
   - component: {fileID: 3556905454689986674}
   - component: {fileID: 1000138647708490428}
   - component: {fileID: 163062276525961063}
   - component: {fileID: 7073717941705990732}
+  - component: {fileID: -862992235365237654}
+  - component: {fileID: 7857645375049281401}
   m_Layer: 0
-  m_Name: SeekShot
+  m_Name: SeekShot_Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,19 +51,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
---- !u!114 &3910317166740030694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620691317799238399}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d226630eea1fa7844981a4337ec35b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expended: 0
 --- !u!114 &7350492282900606392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,3 +157,32 @@ MonoBehaviour:
   speed: 3
   lifespan: 5
   maxSteering: 0.3
+--- !u!54 &-862992235365237654
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620691317799238399}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &7857645375049281401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1620691317799238399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cc96fb8a030b54f924c5e713b9c41c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expended: 0

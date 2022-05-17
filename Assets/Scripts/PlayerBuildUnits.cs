@@ -13,10 +13,8 @@ public class PlayerBuildUnits : MonoBehaviour
 
     public UnitSpawnInfo spwn1;
     public UnitSpawnInfo spwn2;
-    //[SerializeField]
-    //private GameObject spwn4;
-    //[SerializeField]
-    //private GameObject spwn5;
+    public UnitSpawnInfo spwn3;
+
     [SerializeField] private GameObject extractorBase;
 
     private MapState mapState;
@@ -24,20 +22,26 @@ public class PlayerBuildUnits : MonoBehaviour
     private ResourcesMap resourcesMap;
     private PlayerRes playerRes;
     private UnitFactory unitFactory;
-    private CoreController coreController;
+    private PlayerController playerController;
 
     /// <summary>
     /// Tmp hack
     /// </summary>
     [SerializeField]
     private GameObject projBase;
+    [SerializeField]
+    private Sprite unit1Sprite;
+    [SerializeField]
+    private Sprite unit2Sprite;
+    [SerializeField]
+    private Sprite unit3Sprite;
 
     private void Start()
     {
         EnforceSingleton();
 
         playerRes = GetComponent<PlayerRes>();
-        coreController = FindObjectOfType<CoreController>();
+        playerController = FindObjectOfType<PlayerController>();
         mapState = FindObjectOfType<MapState>();
         unitMap = mapState.unitMap;
         unitFactory = FindObjectOfType<UnitFactory>();
@@ -52,8 +56,10 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn1.projectileBase = projBase;
         spwn1.range = 4;
         spwn1.teamToTarget = Team.black;
-        spwn1.cost = 5;
+        spwn1.cost = 15;
+        spwn1.dataCost = 0;
         spwn1.team = Team.white;
+        spwn1.sprite = unit1Sprite;
 
         // hardcoded for testing:
         spwn2 = new UnitSpawnInfo();
@@ -63,59 +69,80 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn2.attackCooldown = 1;
         spwn2.projectileBase = projBase;
         spwn2.range = 4;
-        spwn2.teamToTarget = Team.white;
+        spwn2.teamToTarget = Team.black;
         spwn2.cost = 5;
-        spwn2.team = Team.black;
+        spwn2.dataCost = 1;
+        spwn2.team = Team.white;
+        spwn2.sprite = unit2Sprite;
+
+        // hardcoded for testing:
+        spwn3 = new UnitSpawnInfo();
+        spwn3.maxHealth = 50;
+        spwn3.maxShield = 5;
+        spwn3.attackDamage = 5;
+        spwn3.attackCooldown = 1;
+        spwn3.projectileBase = projBase;
+        spwn3.range = 4;
+        spwn3.teamToTarget = Team.black;
+        spwn3.cost = 5;
+        spwn3.dataCost = 1;
+        spwn3.team = Team.white;
+        spwn3.sprite = unit3Sprite;
     }
 
     private void Update()
     {
 
-        if (coreController.GetDeployed()) { DoInput(); }
-
+        if (playerController.GetDeployed()) { DoInput(); }
     }
 
     private void DoInput()
     {
         if (Input.GetKeyDown(k1) && CanAfford(spwn1)) // rework this expenditure system? is simple though.
         {
-            if (spawnUnit(spwn1, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            Debug.Log("building ");
+
+            if (SpawnUnit(spwn1, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
-                playerRes.SpendMoney(spwn1.cost);
+                playerRes.SpendMass(spwn1.cost);
+                playerRes.SpendData(spwn1.dataCost);
             }
         }
 
         if (Input.GetKeyDown(k2))
         {
-            if (spawnUnit(spwn2, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            if (SpawnUnit(spwn2, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
             {
+                playerRes.SpendMass(spwn2.cost);
+                playerRes.SpendData(spwn2.dataCost);
             }
         }
 
         if (Input.GetKeyDown(k3))
         {
-            if (SpawnExtractor(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
-            {
-                playerRes.SpendMoney(25); // extractor cost
 
+            if (SpawnUnit(spwn3, Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            {
+                playerRes.SpendMass(spwn3.cost);
+                playerRes.SpendData(spwn3.dataCost);
             }
         }
 
         if (Input.GetKeyDown(k4))
         {
+            if (SpawnExtractor(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            {
+                playerRes.SpendMass(25); // extractor cost
 
+            }
 
-            Vector2Int clickTile = VectorTools.GetClosestTileCoordinatesV2Int(Camera.main.ScreenToWorldPoint(Input.mousePosition));
-            //if (resourcesMap.AddNode(clickTile, 500, ResourceType.Circle)) 
-            //{
-
-            //}
         }
     }
 
     private bool CanAfford(UnitSpawnInfo spwninfo)
     {
-        if (playerRes.GetCurrentMoney() > spwninfo.cost)
+        if (playerRes.GetCurrentMass() >= spwninfo.cost
+            && playerRes.GetCurrentData() >= spwninfo.dataCost)
         {
             return true;
         }
@@ -149,7 +176,7 @@ public class PlayerBuildUnits : MonoBehaviour
     }
 
 
-    private bool spawnUnit(UnitSpawnInfo spawnInfo, Vector3 position)
+    private bool SpawnUnit(UnitSpawnInfo spawnInfo, Vector3 position)
     {
 
         Vector2Int spawnTarget = VectorTools.GetClosestTileCoordinatesV2Int(position);
@@ -164,6 +191,11 @@ public class PlayerBuildUnits : MonoBehaviour
             Debug.LogError("Could not find mapOccupiedInfo");
         }
 
+        // checks pathfinding that tile is walkable
+        if (!AstarPath.active.GetNearest(position).node.Walkable)
+        {
+            return false;
+        }
 
         if (unitMap.IsUnitAt(spawnTarget))
         {

@@ -6,7 +6,7 @@ public class PlayerRes : MonoBehaviour
 {
 
     [SerializeField]
-    private int money;
+    private int mass;
     [SerializeField]
     private int data;
  
@@ -14,26 +14,21 @@ public class PlayerRes : MonoBehaviour
     /// Use for income and testing/debug. Use SpendMoney to attempt to spend money.
     /// </summary>
     /// <param name="amount"></param>
-    public void ChangeMoney(int amount)
+    public void ChangeMass(int amount)
     {
-        money += amount;
-        if (money < 0)
-        {
-            money = 0;
-        }
+        mass += amount;
+        if (mass < 0) mass = 0;
+
     }
 
-    public bool SpendMoney(int amount)
+    public bool SpendMass(int amount)
     {
-        if (money >= amount)
+        if (mass >= amount)
         {
-            ChangeMoney(-amount);
+            ChangeMass(-amount);
             return true;
         }
-        else
-        {
-            return false;
-        }
+        else return false;
     }
 
     /// <summary>
@@ -62,9 +57,14 @@ public class PlayerRes : MonoBehaviour
         }
     }
 
-    public int GetCurrentMoney()
+    public int GetCurrentMass()
     {
-        return money;
+        return mass;
+    }
+
+    public int GetCurrentData()
+    {
+        return data;
     }
 
 }

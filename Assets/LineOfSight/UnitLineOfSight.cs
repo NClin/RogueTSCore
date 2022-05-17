@@ -5,7 +5,7 @@ using UnityEngine;
 public class UnitLineOfSight : MonoBehaviour
 {
     [SerializeField]
-    public float radius;
+    private float radius;
 
     LineOfSight lineOfSight;
 

@@ -14,9 +14,20 @@ public class MapGenerationHandler : MonoBehaviour
     int walkWidth;
     [SerializeField]
     float coverage;
+    [SerializeField]
+    int massNodes;
+    [SerializeField]
+    int massNodeValue;
+    [SerializeField]
+    int dataSpawns;
+    [SerializeField]
+    ResourceNodeHandler resourceNodeHandler;
+    [SerializeField]
+    private GameObject dataObject;
 
     private void Start()
     {
+        // create map
         drunkenWalkMapInfoGenerator = new MapGeneratorDrunkenWalk();
         mapState = FindObjectOfType<MapState>();
         Debug.Log("generating map");
@@ -24,5 +35,27 @@ public class MapGenerationHandler : MonoBehaviour
 
         mapState.SetTileTypeMap(generatedMap);
         FindObjectOfType<LineOfSight>().SetScale(dimensions.x, dimensions.y);
+
+        // spawn resources
+        for (int i = 0; i <= massNodes; i++)
+        {
+            Vector2Int placement = new Vector2Int(Random.Range(1, dimensions.x - 1), Random.Range(1, dimensions.y - 1));
+            if (mapState.tileTypeMap.GetTileType(placement) == TileType.empty
+                && !mapState.resourcesMap.IsNodeAt(placement))
+            {
+                resourceNodeHandler.AddResourceNode(placement, massNodeValue);
+            }
+        }
+
+        for (int i = 0; i <= dataSpawns; i++)
+        {
+            Vector2Int placement = new Vector2Int(Random.Range(1, dimensions.x - 1), Random.Range(1, dimensions.y - 1));
+            if (mapState.tileTypeMap.GetTileType(placement) == TileType.empty
+                && !mapState.resourcesMap.IsNodeAt(placement))
+            {
+                var placementV3 = new Vector3(placement.x, placement.y, 0);
+                Instantiate(dataObject, placementV3, Quaternion.identity);
+            }
+        }
     }
 }

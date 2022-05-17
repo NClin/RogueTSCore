@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 2458103073807019194}
   - component: {fileID: 3245648777787065071}
   - component: {fileID: 4007834698157450384}
-  - component: {fileID: 3957006497245884305}
   - component: {fileID: 7398307005438117583}
   - component: {fileID: 3599091218863358725}
   - component: {fileID: 959007246458286539}
   - component: {fileID: 210948494163084304}
+  - component: {fileID: 3257542279789356879}
+  - component: {fileID: 8876539645844245691}
   m_Layer: 0
   m_Name: StraightShot 1
   m_TagString: Untagged
@@ -64,19 +65,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   lifespan: 3
---- !u!114 &3957006497245884305
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1644934153849639304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d226630eea1fa7844981a4337ec35b37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  expended: 0
 --- !u!114 &7398307005438117583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,3 +156,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultParentName: Projectiles
+--- !u!114 &3257542279789356879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644934153849639304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30cc96fb8a030b54f924c5e713b9c41c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expended: 0
+--- !u!54 &8876539645844245691
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644934153849639304}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0

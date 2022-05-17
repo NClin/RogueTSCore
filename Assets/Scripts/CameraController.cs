@@ -16,7 +16,7 @@ public class CameraController : MonoBehaviour
     private float zoomFactor;
     public bool moveMode;
     [SerializeField]
-    private GameObject core;
+    private GameObject playerCore;
     [SerializeField]
     bool requireCore;
 
@@ -29,7 +29,7 @@ public class CameraController : MonoBehaviour
     {
         if (requireCore)
         {
-            moveMode = core.GetComponent<CoreController>().GetDeployed();
+            GetMoveModeFromCoreDeployed();
         }
         else
         {
@@ -41,9 +41,11 @@ public class CameraController : MonoBehaviour
         SetZoomFactor();
     }
 
+
+
     void Update()
     {
-
+        GetMoveModeFromCoreDeployed();
 
         if (moveMode) { WSADmovement(); }
         
@@ -59,9 +61,14 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    private void GetMoveModeFromCoreDeployed()
+    {
+        moveMode = playerCore.GetComponent<PlayerController>().GetDeployed();
+    }
+
     void FollowCore()
     {
-        transform.position = new Vector3(core.transform.position.x, core.transform.position.y, transform.position.z);
+        transform.position = new Vector3(playerCore.transform.position.x, playerCore.transform.position.y, transform.position.z);
     }
 
     private void WSADmovement()

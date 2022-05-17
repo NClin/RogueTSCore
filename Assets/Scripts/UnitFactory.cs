@@ -20,13 +20,10 @@ public class UnitFactory : MonoBehaviour
         GameObject toSpawn = Instantiate(unitBase, position, Quaternion.identity);
         Unit toSpawnUnit = toSpawn.GetComponent<Unit>();
         toSpawnUnit.team = spwnInfo.team;
-
-        if (selectable)
-        {
-            toSpawn.AddComponent<SelectableUnit>();
-        }
-
         toSpawnUnit.SetSpawnValues(spwnInfo.maxHealth, spwnInfo.maxShield);
+        toSpawnUnit.GetComponent<SpriteRenderer>().sprite = spwnInfo.sprite;
+
+        if (selectable) toSpawn.AddComponent<SelectableUnit>();
 
         if (spwnInfo.range != 0)
         {
@@ -40,6 +37,10 @@ public class UnitFactory : MonoBehaviour
             fireModule.damage = spwnInfo.attackDamage;
             fireModule.cooldown = spwnInfo.attackCooldown;
             fireModule.projectile = spwnInfo.projectileBase;
+        }
+        if (spwnInfo.power != null)
+        {
+            // TODO
         }
 
         return toSpawn;

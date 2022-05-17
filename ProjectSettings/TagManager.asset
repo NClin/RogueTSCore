@@ -41,14 +41,14 @@ TagManager:
   - name: Terrain
     uniqueID: 950533959
     locked: 0
-  - name: SelectionIndicators
-    uniqueID: 541472319
-    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Units
     uniqueID: 3852533389
+    locked: 0
+  - name: SelectionIndicators
+    uniqueID: 541472319
     locked: 0
   - name: Projectiles
     uniqueID: 2515443587

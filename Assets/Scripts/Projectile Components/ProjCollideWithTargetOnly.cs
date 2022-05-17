@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(HasTarget))]
 [RequireComponent(typeof(ProjectileEffects))]
-public class TargetCollision : MonoBehaviour
+public class ProjCollideWithTargetOnly : MonoBehaviour
 {
     public bool expended = false;
 

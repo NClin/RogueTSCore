@@ -15,18 +15,10 @@ public class SelectableUnit : MonoBehaviour
 
     void Update()
     {
-        
-
         if (selected)
-        {
             selectedIndicator.SetActive(true);
-        }
-        else
-        {
-            if (selectedIndicator.activeInHierarchy)
-            {
-                selectedIndicator.SetActive(false);
-            } 
-        }
+
+        else if (selectedIndicator.activeInHierarchy)
+            selectedIndicator.SetActive(false);
     }
 }

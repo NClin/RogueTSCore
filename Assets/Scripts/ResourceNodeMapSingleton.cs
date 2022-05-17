@@ -84,7 +84,7 @@ public class ResourceNodeMapSingleton : MonoBehaviour
          }
 
         var toSpawn = Instantiate(nodePrefab, new Vector3(tile.x, tile.y, 0), Quaternion.identity);
-        toSpawn.GetComponent<ResourceNode>().SetStock(nodeStock, resourceType);
+        toSpawn.GetComponent<ResourceNode>().SetStock(nodeStock);
         resourceNodeMap[tile.x, tile.y] = toSpawn.GetComponent<ResourceNode>();
         return true;
     }

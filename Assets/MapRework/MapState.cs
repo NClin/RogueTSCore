@@ -25,9 +25,7 @@ public class MapState : MonoBehaviour
     /// <param name="mapToSet"></param>
     public void SetTileTypeMap(TileTypeMap mapToSet)
     {
-        int width = mapToSet.Width();
-        int height = mapToSet.Height();
-
+        tileTypeMap = mapToSet;
         unitMap = new UnitMap(mapToSet.Height(), mapToSet.Width());
         resourcesMap = new ResourcesMap(mapToSet.Height(), mapToSet.Width());
         lineOfSight = FindObjectOfType<LineOfSight>();

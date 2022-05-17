@@ -42,4 +42,19 @@ public class ResourcesMap
         return true;
     }
 
+    public List<ResourceNode> GetNearbyResourceNodes(Vector2 point, float range)
+    {
+        var nodes = new List<ResourceNode>();
+
+        foreach (var loc in resourcesMap)
+        {
+            if (loc != null && Vector2.Distance(loc.position, point) < range)
+            {
+                nodes.Add(loc);
+            }
+        }
+
+        return nodes;
+    }
+
 }
