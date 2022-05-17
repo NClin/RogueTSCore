@@ -4,16 +4,19 @@ using UnityEngine;
 
 public class Teleport : IPower
 {
-    public float cooldown { get; set; } = 2f;
+    public float cooldown { get; set; } = 12f;
     public PowerTypeEnum powerTypeEnum { get; set; } = PowerTypeEnum.targeted;
-    public int maxRange { get; set; } = 10;
+    public int maxRange { get; set; } = 5;
     public float timeSinceUse { get; set; } = float.MaxValue;
+    private MapState mapState;
 
     public void OnUse(Vector2Int targetTile, GameObject user)
     {
-        if (IsReady())
+        if (mapState == null) mapState = GameObject.FindObjectOfType<MapState>();
+
+        if (IsReady() && !mapState.unitMap.IsUnitAt(targetTile))
         { 
-            user.GetComponent<MoveableUnit>().TeleportTo(targetTile);
+            user.GetComponent<MovementStripped>().SetPosition(targetTile);
             timeSinceUse = 0;
         }
     }
@@ -23,7 +26,7 @@ public class Teleport : IPower
         timeSinceUse += Time.deltaTime;
     }
 
-    private bool IsReady()
+    public bool IsReady()
     {
         if (timeSinceUse > cooldown)
         {
@@ -32,5 +35,4 @@ public class Teleport : IPower
 
         return false;
     }
-
 }

@@ -9,7 +9,7 @@ public class HasTarget : MonoBehaviour
     /// </summary>
     public GameObject? target;
 
-    public bool hasTargetTrue()
+    public bool hasTarget()
     {
         if (target != null)
         {

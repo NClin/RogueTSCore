@@ -16,6 +16,7 @@ public class PlayerBuildUnits : MonoBehaviour
     public UnitSpawnInfo spwn3;
 
     [SerializeField] private GameObject extractorBase;
+    [SerializeField] private GameObject enemyBase;
 
     private MapState mapState;
     private UnitMap unitMap;
@@ -47,10 +48,10 @@ public class PlayerBuildUnits : MonoBehaviour
         unitFactory = FindObjectOfType<UnitFactory>();
         resourcesMap = mapState.resourcesMap;
 
-        // hardcoded for testing:
+        // hardcoded for testing: Infantry.
         spwn1 = new UnitSpawnInfo();
         spwn1.maxHealth = 50;
-        spwn1.maxShield = 5;
+        spwn1.maxShield = 0;
         spwn1.attackDamage = 5;
         spwn1.attackCooldown = 1;
         spwn1.projectileBase = projBase;
@@ -61,10 +62,10 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn1.team = Team.white;
         spwn1.sprite = unit1Sprite;
 
-        // hardcoded for testing:
+        // hardcoded for testing: Healer.
         spwn2 = new UnitSpawnInfo();
         spwn2.maxHealth = 50;
-        spwn2.maxShield = 5;
+        spwn2.maxShield = 0;
         spwn2.attackDamage = 5;
         spwn2.attackCooldown = 1;
         spwn2.projectileBase = projBase;
@@ -74,11 +75,12 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn2.dataCost = 1;
         spwn2.team = Team.white;
         spwn2.sprite = unit2Sprite;
+        spwn2.power = new HealTarget();
 
-        // hardcoded for testing:
+        // hardcoded for testing: Gnome.
         spwn3 = new UnitSpawnInfo();
         spwn3.maxHealth = 50;
-        spwn3.maxShield = 5;
+        spwn3.maxShield = 0;
         spwn3.attackDamage = 5;
         spwn3.attackCooldown = 1;
         spwn3.projectileBase = projBase;
@@ -88,6 +90,7 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn3.dataCost = 1;
         spwn3.team = Team.white;
         spwn3.sprite = unit3Sprite;
+        spwn3.power = new Teleport();
     }
 
     private void Update()
@@ -130,12 +133,7 @@ public class PlayerBuildUnits : MonoBehaviour
 
         if (Input.GetKeyDown(k4))
         {
-            if (SpawnExtractor(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
-            {
-                playerRes.SpendMass(25); // extractor cost
-
-            }
-
+            Instantiate(enemyBase, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
         }
     }
 

@@ -39,7 +39,7 @@ public class TargetingModule : MonoBehaviour
         if (targetingMode == TargetingMode.Manual)
         {
             // default to closest
-            if (!GetComponent<HasTarget>().hasTargetTrue())
+            if (!GetComponent<HasTarget>().hasTarget())
             {
                 targetingMode = TargetingMode.Closest;
             }
@@ -110,6 +110,10 @@ public class TargetingModule : MonoBehaviour
         if (closestTarget != null)
         {
             GetComponent<HasTarget>().target = closestTarget;
+        }
+        else
+        {
+            GetComponent<HasTarget>().target = null;
         }
 
     }

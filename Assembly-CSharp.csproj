@@ -78,6 +78,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scripts\CoreController.cs" />
+    <Compile Include="Assets\HighlightAndExtractResources.cs" />
     <Compile Include="Assets\Scripts\SilexarsMaintainAspect.cs" />
     <Compile Include="Assets\Scripts\PlayerBuildUnits.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Assets\Scripts\ResourceNode.cs" />
     <Compile Include="Assets\Tiles\MapTileFactory.cs" />
     <Compile Include="Assets\Scripts\PlayerRes.cs" />
+    <Compile Include="Assets\CollectMe.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
     <Compile Include="Assets\Scripts\RadialHealthBarShader.cs" />
@@ -165,15 +167,16 @@
     <Compile Include="Assets\MapRework\MovementUpdated.cs" />
     <Compile Include="Assets\Scripts\gridlabels.cs" />
     <Compile Include="Assets\Scripts\mapOccupiedInfo.cs" />
+    <Compile Include="Assets\CollectsData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\StraightProjBehaviour.cs" />
+    <Compile Include="Assets\FlashingSprite.cs" />
     <Compile Include="Assets\Scripts\Unit Components\RadialWeapon.cs" />
     <Compile Include="Assets\Scripts\LineOfSight.cs" />
     <Compile Include="Assets\Scripts\Deprecated Scripts\MoveableUnit.cs" />
     <Compile Include="Assets\LineOfSight\UnitLineOfSight.cs" />
     <Compile Include="Assets\Scripts\CoreControllerPathfinding.cs" />
-    <Compile Include="Assets\SpawnCore.cs" />
     <Compile Include="Assets\Scripts\MapGeneratorDrunkenWalk.cs" />
     <Compile Include="Assets\Scripts\MapTilePlacer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
@@ -188,10 +191,11 @@
     <Compile Include="Assets\MapRework\UnitMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\FlashingSprite.cs" />
-    <Compile Include="Assets\HighlightAndExtractResources.cs" />
-    <Compile Include="Assets\CollectMe.cs" />
-    <Compile Include="Assets\CollectsData.cs" />
+    <Compile Include="Assets\TimerText.cs" />
+    <Compile Include="Assets\AttackPlayer.cs" />
+    <Compile Include="Assets\HealthBar.cs" />
+    <Compile Include="Assets\Scripts\Powers\HealTarget.cs" />
+    <Compile Include="Assets\SpawnHostiles.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />
@@ -323,6 +327,7 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Subtractive.shader" />
      <None Include="Assets\LineOfSight\LoS.shader" />
      <None Include="Assets\Graphics\SimpleTransparency.shader" />
+     <None Include="Assets\Shaders\HealthBarShader.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Disc Opaque.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Multiplicative.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Cone Screen.shader" />

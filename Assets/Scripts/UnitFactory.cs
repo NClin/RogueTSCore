@@ -40,7 +40,8 @@ public class UnitFactory : MonoBehaviour
         }
         if (spwnInfo.power != null)
         {
-            // TODO
+            var powerModule = toSpawn.AddComponent<UnitPower>();
+            powerModule.SetPower(spwnInfo.power);
         }
 
         return toSpawn;

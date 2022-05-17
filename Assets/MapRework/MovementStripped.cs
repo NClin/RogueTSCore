@@ -73,7 +73,6 @@ public class MovementStripped : MonoBehaviour
 
     public void MoveTo(Vector3 input, bool formationPathing = false)
     {
-        Debug.Log("move to " + input);
         newPaths = 0;
         this.formationPathing = formationPathing;
         shouldMove = true;
@@ -358,5 +357,11 @@ public class MovementStripped : MonoBehaviour
         return ret;
     }
 
+    public void SetPosition(Vector2Int position)
+    {
+        var posV3 = new Vector3(position.x, position.y, 0);
+        transform.position = posV3;
+        SnapToNearestTile();
+    }
 
 }

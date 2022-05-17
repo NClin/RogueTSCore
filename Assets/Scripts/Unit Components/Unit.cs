@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public enum Team
@@ -20,11 +23,6 @@ public class Unit : MonoBehaviour
     public Team team;
     private bool spawned = false;
 
-    private void Start()
-    {
-        SetTeamColor();
-    }
-
     /// <summary>
     /// Can only be called once.
     /// </summary>
@@ -44,6 +42,8 @@ public class Unit : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
+        Debug.Log("took damage");
+
         if (shield > 0)
         {
             shield -= 1;
@@ -92,6 +92,11 @@ public class Unit : MonoBehaviour
         {
             maxShield += amount;
         }
+    }
+    
+    public float GetHealthPercentage()
+    {
+        return (float)health / (float)maxHealth;
     }
 
     private void Die()

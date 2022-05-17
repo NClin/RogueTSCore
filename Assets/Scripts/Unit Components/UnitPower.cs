@@ -6,10 +6,6 @@ public class UnitPower : MonoBehaviour
 {
     private IPower powerScript;
 
-    private void Start()
-    {
-        powerScript = new Teleport(); // test entry, to be constructed elsewhere.
-    }
 
     private void Update()
     {
@@ -24,12 +20,23 @@ public class UnitPower : MonoBehaviour
 
     private void DoPowerInput()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        var selectable = GetComponent<SelectableUnit>();
+
+        if (powerScript == null) return;
+        if (selectable == null) return;
+
+        if (Input.GetKeyDown(KeyCode.F) && selectable.selected)
         {
+            Debug.Log("got heal order");
             var clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2Int tile = new Vector2Int(Mathf.RoundToInt(clickPos.x), Mathf.RoundToInt(clickPos.y));
             Use(tile);
         }
+    }
+
+    public void SetPower(IPower power)
+    {
+        powerScript = power;
     }
 
 }

@@ -2,41 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(MovementStripped))]
 public class AttackMoveBehaviour : MonoBehaviour
 {
-    public Vector3Int destination;
     bool moving = false;
+    MovementStripped movement;
+
+    private Vector3Int _destination;
+    public Vector3Int destination { 
+        get
+        {
+            return _destination;
+        }
+        set
+        {
+            if (value != _destination)
+            {
+                movement.MoveTo(destination);
+            }
+            _destination = value;
+        }
+    }
+    
 
     void Start()
     {
-        GetComponent<Movement>().MoveTo(destination);
-        moving = true;
+        movement = GetComponent<MovementStripped>();
+        destination = Vector3Int.zero;
     }
 
     void Update()
     {
-        if (GetComponent<HasTarget>().hasTargetTrue())
+        if (GetComponent<HasTarget>().hasTarget())
         {
             Halt();
         }
 
-        if (!GetComponent<HasTarget>().hasTargetTrue()
-            && !moving)
+        if (!GetComponent<HasTarget>().hasTarget())
         {
             Resume();
         }
+
     }
 
     void Halt()
     {
-        GetComponent<Movement>().StopOrder();
+        movement.StopOrder();
         moving = false;
     }
 
     void Resume()
     {
-        GetComponent<Movement>().MoveTo(destination);
+        movement.MoveTo(destination);
         moving = true;
     }
 }

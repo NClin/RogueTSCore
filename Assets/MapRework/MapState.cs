@@ -40,6 +40,13 @@ public class MapState : MonoBehaviour
         pathfindingHandler = FindObjectOfType<PathfindingHandler>();
     }
 
+    public bool IsTileOpen(Vector2Int tile)
+    {
+        if (unitMap.IsUnitAt(tile) || tileTypeMap.GetTileType(tile) != TileType.empty)
+            return false;
+        else
+            return true;
+    }
 
 
 }
