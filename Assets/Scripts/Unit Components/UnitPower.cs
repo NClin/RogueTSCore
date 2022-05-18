@@ -27,7 +27,6 @@ public class UnitPower : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F) && selectable.selected)
         {
-            Debug.Log("got heal order");
             var clickPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2Int tile = new Vector2Int(Mathf.RoundToInt(clickPos.x), Mathf.RoundToInt(clickPos.y));
             Use(tile);
@@ -37,6 +36,11 @@ public class UnitPower : MonoBehaviour
     public void SetPower(IPower power)
     {
         powerScript = power;
+    }
+
+    public bool IsPowerReady()
+    {
+        return powerScript.IsReady();
     }
 
 }

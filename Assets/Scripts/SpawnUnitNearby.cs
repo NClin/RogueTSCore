@@ -36,6 +36,6 @@ public class SpawnUnitNearby : MonoBehaviour
         unitToSpawn.GetComponentInChildren<FireProjectileTowardsTarget>().damage = spawnDamage;
         var randomDir = Random.insideUnitSphere.normalized;
         randomDir.z = 0;
-        unitToSpawn.GetComponent<Movement>().MoveTo(transform.position + randomDir);
+        unitToSpawn.GetComponent<MovementStripped>().MoveTo(transform.position + randomDir);
     }
 }

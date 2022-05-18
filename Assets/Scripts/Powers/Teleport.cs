@@ -35,4 +35,9 @@ public class Teleport : IPower
 
         return false;
     }
+
+    public IPower Clone()
+    {
+        return (IPower)this.MemberwiseClone();
+    }
 }

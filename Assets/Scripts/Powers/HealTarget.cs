@@ -29,17 +29,24 @@ public class HealTarget : IPower
 
     public void OnUse(Vector2Int targetTile, GameObject user)
     {
+        if (!IsReady()) return;
 
-        Debug.Log("healing");
         if (mapState == null) 
             mapState = GameObject.FindObjectOfType<MapState>();
 
         if (!mapState.unitMap.IsUnitAt(targetTile)) return;
         
+
         var targetUnit = mapState.unitMap.GetUnitAt(targetTile).GetComponent<Unit>();
         var userTeam = user.GetComponent<Unit>().team;
         if (targetUnit == null || targetUnit.team != userTeam) return;
 
         targetUnit.ChangeHealth(healAmount);
+        timeSinceUse = 0;
+    }
+
+    public IPower Clone()
+    {
+        return (IPower)this.MemberwiseClone();
     }
 }

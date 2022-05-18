@@ -10,10 +10,16 @@ public class SelectableUnit : MonoBehaviour
         if (selectedIndicator == null)
         {
             selectedIndicator = Instantiate((GameObject)Resources.Load("SelectionIndicator"), gameObject.transform);
+            ToggleIndicator();
         }
     }
 
     void Update()
+    {
+        ToggleIndicator();
+    }
+
+    void ToggleIndicator()
     {
         if (selected)
             selectedIndicator.SetActive(true);

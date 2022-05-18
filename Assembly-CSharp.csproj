@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{1E7026F5-BFB1-FF01-B541-80DF36A79A90}</ProjectGuid>
+    <ProjectGuid>{28371666-200C-AE13-FFA5-B7C253DED90C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -56,30 +56,27 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\blockmanagersetter.cs" />
-    <Compile Include="Assets\Scripts\IAttack.cs" />
     <Compile Include="Assets\Scripts\UnitSpawnInfo.cs" />
     <Compile Include="Assets\Scripts\VectorTools.cs" />
     <Compile Include="Assets\Graphics\MeshGenerator\GenerateSphere\DrawSphere.cs" />
+    <Compile Include="Assets\PowerReadyIndicator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
+    <Compile Include="Assets\Scripts\Powers\HealTarget.cs" />
     <Compile Include="Assets\Scripts\Unit Components\SeekBehaviour.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Extractor.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
+    <Compile Include="Assets\MapRework\TimerText.cs" />
     <Compile Include="Assets\Scripts\Powers\Teleport.cs" />
-    <Compile Include="Assets\PlayerController.cs" />
-    <Compile Include="Assets\Tiles\MapTile.cs" />
+    <Compile Include="Assets\MapRework\PlayerController.cs" />
     <Compile Include="Assets\Scripts\MassTextDisplay.cs" />
-    <Compile Include="Assets\Scripts\MapTileContainer.cs" />
     <Compile Include="Assets\Scripts\PathfindingGridScanner.cs" />
     <Compile Include="Assets\Scripts\ResourceType.cs" />
-    <Compile Include="Assets\MapRework\TileTypeMapDeprecated.cs" />
     <Compile Include="Assets\Scripts\Scanner.cs" />
     <Compile Include="Assets\Scripts\UnitFactory.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+    <Compile Include="Assets\TriggerExit.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
-    <Compile Include="Assets\Scripts\CoreController.cs" />
-    <Compile Include="Assets\HighlightAndExtractResources.cs" />
-    <Compile Include="Assets\Scripts\SilexarsMaintainAspect.cs" />
+    <Compile Include="Assets\MapRework\HighlightAndExtractResources.cs" />
     <Compile Include="Assets\Scripts\PlayerBuildUnits.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
@@ -92,17 +89,15 @@
     <Compile Include="Assets\Scripts\SpawnUnitNearby.cs" />
     <Compile Include="Assets\Scripts\tileGradientTwinkle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\MapRework\AttackPlayer.cs" />
     <Compile Include="Assets\Scripts\Unit Components\SelectableUnit.cs" />
-    <Compile Include="Assets\Scripts\LoSTest.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\FormationStamp.cs" />
     <Compile Include="Assets\Scripts\MapGeneratorCellularAutomata.cs" />
     <Compile Include="Assets\Scripts\Unit Components\WanderBehaviour.cs" />
     <Compile Include="Assets\Scripts\AutomateShader.cs" />
-    <Compile Include="Assets\Scripts\BlockManagerHolder.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\AILerpEdited.cs" />
     <Compile Include="Assets\Scripts\SetDefaultParent.cs" />
     <Compile Include="Assets\MapRework\MovementStripped.cs" />
     <Compile Include="Assets\Scripts\SelectionManager.cs" />
@@ -111,30 +106,24 @@
     <Compile Include="Assets\Scripts\TargetingModule.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\Scripts\Singletons.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\BlockOccupiedNode.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\MapRework\MapTileHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\ProjectileEffects.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\ProjCollideWithAnyUnitOfTargetTeam_Trigger.cs" />
     <Compile Include="Assets\MapRework\ResourcesMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\shapesDrawPulsingLine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\Scripts\TileGridScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\SeekProjBehaviour.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\ProjCollideWithAnyUnitOfTargetTeam.cs" />
     <Compile Include="Assets\MapRework\MapGenerationHandler.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <Compile Include="Assets\Scripts\OptimizeAtDistance.cs" />
-    <Compile Include="Assets\Scripts\AttackMoveBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Unit Behaviours\AttackMoveBehaviour.cs" />
     <Compile Include="Assets\Graphics\MeshGenerator\GenerateQuadMesh.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Teleportable.cs" />
-    <Compile Include="Assets\MapRework\MapTileMk2.cs" />
-    <Compile Include="Assets\Scripts\TiledTexturesCreateIndexTexture.cs" />
+    <Compile Include="Assets\Scripts\TileMapIndexTexture.cs" />
     <Compile Include="Assets\Scripts\TileType.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\Unit Components\MarkTarget.cs" />
@@ -143,59 +132,40 @@
     <Compile Include="Assets\Scripts\Unit Components\Targetable.cs" />
     <Compile Include="Assets\Scripts\ResourceNodeHandler.cs" />
     <Compile Include="Assets\Scripts\ResourceNodeMapSingleton.cs" />
-    <Compile Include="Assets\Scripts\coroutineAnalysis.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\ProjCollideWithTargetOnly.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\ResourceNode.cs" />
-    <Compile Include="Assets\Tiles\MapTileFactory.cs" />
     <Compile Include="Assets\Scripts\PlayerRes.cs" />
-    <Compile Include="Assets\CollectMe.cs" />
+    <Compile Include="Assets\MapRework\CollectMe.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scripts\Powers\PowerTypeEnum.cs" />
-    <Compile Include="Assets\Scripts\RadialHealthBarShader.cs" />
     <Compile Include="Assets\Scripts\Unit Components\Unit.cs" />
     <Compile Include="Assets\Scripts\StaticInstance.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\drawLineToTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\MapRework\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\HasTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\Scripts\moveforward.cs" />
     <Compile Include="Assets\Scripts\SetTextureTest.cs" />
-    <Compile Include="Assets\MapRework\TileMapTileHandler.cs" />
-    <Compile Include="Assets\Scripts\SelectionBoxHack.cs" />
-    <Compile Include="Assets\MapRework\MovementUpdated.cs" />
-    <Compile Include="Assets\Scripts\gridlabels.cs" />
-    <Compile Include="Assets\Scripts\mapOccupiedInfo.cs" />
-    <Compile Include="Assets\CollectsData.cs" />
+    <Compile Include="Assets\MapRework\SpawnHostiles.cs" />
+    <Compile Include="Assets\MapRework\CollectsData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\Scripts\Powers\IPower.cs" />
     <Compile Include="Assets\Scripts\Projectile Components\StraightProjBehaviour.cs" />
-    <Compile Include="Assets\FlashingSprite.cs" />
-    <Compile Include="Assets\Scripts\Unit Components\RadialWeapon.cs" />
+    <Compile Include="Assets\MapRework\FlashingSprite.cs" />
     <Compile Include="Assets\Scripts\LineOfSight.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\MoveableUnit.cs" />
     <Compile Include="Assets\LineOfSight\UnitLineOfSight.cs" />
-    <Compile Include="Assets\Scripts\CoreControllerPathfinding.cs" />
     <Compile Include="Assets\Scripts\MapGeneratorDrunkenWalk.cs" />
-    <Compile Include="Assets\Scripts\MapTilePlacer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-    <Compile Include="Assets\Scripts\Deprecated Scripts\MovableUnit2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\MapRework\MapState.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Scripts\Unit Components\FireProjectileTowardsTarget.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\Scripts\Unit Components\Movement.cs" />
     <Compile Include="Assets\MapRework\UnitMap.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\Unit Components\UnitPower.cs" />
-    <Compile Include="Assets\TimerText.cs" />
-    <Compile Include="Assets\AttackPlayer.cs" />
-    <Compile Include="Assets\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Powers\HealTarget.cs" />
-    <Compile Include="Assets\SpawnHostiles.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Darken.shader" />
@@ -230,7 +200,6 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 2D ColorBurn.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Torus Transparent.shader" />
-     <None Include="Assets\CoreExperiments\CirclingParticles.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Triangle Transparent.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 3D Opaque.shader" />
      <None Include="Assets\Shapes\Shaders\FillUtils.cginc" />
@@ -259,7 +228,6 @@
      <None Include="Assets\Graphics\GlitteringPinkSprite.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Polyline 2D Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Rect Darken.shader" />
-     <None Include="Assets\CoreExperiments\WarpedRing.shader" />
      <None Include="Assets\Graphics\MeshGenerator\GenerateSphere\DrawSphere.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Line 3D Screen.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Quad Darken.shader" />
@@ -408,7 +376,6 @@
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Sphere ColorDodge.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Sphere Transparent.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Sphere Opaque.shader" />
-     <None Include="Assets\CoreExperiments\CreationSilexars.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\Shapes\Shaders\Generated Shaders\Resources\Quad Additive.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
@@ -1150,27 +1117,27 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="PackageToolsEditor.csproj">
-      <Project>{DFBA9708-F9D7-3831-EA4C-EBAE07F88979}</Project>
+      <Project>{888FD2A5-CC07-E71A-BDAE-EA6C1E6ECF73}</Project>
       <Name>PackageToolsEditor</Name>
     </ProjectReference>
     <ProjectReference Include="ShapesSamples.csproj">
-      <Project>{7079BA85-AD00-AFC2-1CFF-A14C02932221}</Project>
+      <Project>{ACD2DA5A-E520-733F-2A6A-21EC8F3CBE5E}</Project>
       <Name>ShapesSamples</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProject.csproj">
-      <Project>{094EA157-DE66-0A8B-3A08-D15F215707B2}</Project>
+      <Project>{F96B1260-6FCF-8A91-A3BF-B7B83F3AAAA2}</Project>
       <Name>AstarPathfindingProject</Name>
     </ProjectReference>
     <ProjectReference Include="ShapesRuntime.csproj">
-      <Project>{33DCF752-B572-91DE-7B32-93E00730A72B}</Project>
+      <Project>{4E3B2B85-57FA-425A-76D9-006EE9B37618}</Project>
       <Name>ShapesRuntime</Name>
     </ProjectReference>
     <ProjectReference Include="AstarPathfindingProjectEditor.csproj">
-      <Project>{83AC3FAF-74D0-9F13-E130-2821B022CFA6}</Project>
+      <Project>{BEB5BCC0-9C15-7AE6-59E2-CBB58E9C6173}</Project>
       <Name>AstarPathfindingProjectEditor</Name>
     </ProjectReference>
     <ProjectReference Include="ShapesEditor.csproj">
-      <Project>{7CF8B2EC-B25D-40F4-CBEF-66A378CEE3FD}</Project>
+      <Project>{E79D590E-29F1-6A56-E83C-397D362EA845}</Project>
       <Name>ShapesEditor</Name>
     </ProjectReference>
   </ItemGroup>

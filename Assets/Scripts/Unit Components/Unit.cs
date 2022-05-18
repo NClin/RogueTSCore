@@ -101,9 +101,9 @@ public class Unit : MonoBehaviour
 
     private void Die()
     {
-        if (GetComponent<Movement>() != null)
+        if (GetComponent<MovementStripped>() != null)
         {
-            GetComponent<Movement>().Die();
+            GetComponent<MovementStripped>().Die();
         }
         
         Destroy(gameObject);

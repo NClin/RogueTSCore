@@ -1,5 +1,5 @@
 sceneSetups:
-- path: Assets/MapRework/MapV2.unity
+- path: Assets/Graphics/Graphics Playground.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0

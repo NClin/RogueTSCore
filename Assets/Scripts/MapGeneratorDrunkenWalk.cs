@@ -10,7 +10,7 @@ public class MapGeneratorDrunkenWalk
     }
 
 
-    private TileTypeMap DoRandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 25, int walkWidth = 1)
+    private TileTypeMap DoRandomWalk(int width, int height, float approxCoveragePercent, int maxWalk = 40, int walkWidth = 1)
     {
         TileTypeMap mapInfo = new TileTypeMap(width, height);
 
@@ -66,13 +66,6 @@ public class MapGeneratorDrunkenWalk
             {
                 step = new Vector2Int(currentTile.x + 1, currentTile.y);
                 mapInfo.SetTileType(TileType.empty, step);
-                //for (int i = 0; i < walkWidth; i++)
-                //{
-                //    if (VectorTools.IsExistsRelativeTile(currentTile, width, height, Vector2Int.right * i))
-                //    {
-                //        mapInfo.SetTileType(TileType.empty, step + Vector2Int.right * i);
-                //    }
-                //}
                 totalStepsTaken++;
                 currentTile = step;
                 currentWalkLength++;

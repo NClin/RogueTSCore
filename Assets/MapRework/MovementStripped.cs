@@ -99,7 +99,7 @@ public class MovementStripped : MonoBehaviour
     }
 
     /// <summary>
-    /// I don't understand how this works and will probably have to rework it.
+    /// I don't completely understand how this works and will probably have to rework it.
     /// </summary>
     /// <returns></returns>
     private IEnumerator FollowPathCoroutine()
@@ -133,8 +133,6 @@ public class MovementStripped : MonoBehaviour
             // check if arrived.
             if (stepIndex >= path.vectorPath.Count)
             {
-                Debug.Log("arrived1");
-
                 StopOrder();
                 yield break;
             }
@@ -148,20 +146,6 @@ public class MovementStripped : MonoBehaviour
                 if (unitMap.IsUnitAt(nextStepV2Int))
                 {
                     attempts++;
-                    Debug.Log("Attempts = " + attempts);
-
-                    //if (unitMap.GetUnitAt(nextStepV2Int).GetComponent<MovementStripped>().followPathCoroutine)
-                    //{
-                    //    yield return new WaitForSeconds(0.1f);
-                    //    continue;
-                    //}
-                    //else
-                    //{
-                    //    if (Vector2.Distance(transform.position, new Vector2(currentDestination.x, currentDestination.y)) < closeEnoughThreshold)
-                    //{
-                    //    StopOrder();
-                    //}
-
 
                     if (attempts > maxAttempts)
                     {
@@ -190,12 +174,10 @@ public class MovementStripped : MonoBehaviour
 
                         continue;
                     }
-                //}
 
                 // check if arrived (again, path may have changed)
                 if (stepIndex >= path.vectorPath.Count)
                 {
-                    Debug.Log("arrived2");
 
                     StopOrder();
                     yield break;

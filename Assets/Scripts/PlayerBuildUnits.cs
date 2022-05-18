@@ -15,7 +15,7 @@ public class PlayerBuildUnits : MonoBehaviour
     public UnitSpawnInfo spwn2;
     public UnitSpawnInfo spwn3;
 
-    [SerializeField] private GameObject extractorBase;
+    private GameObject extractorBase; // not currently in use
     [SerializeField] private GameObject enemyBase;
 
     private MapState mapState;
@@ -26,7 +26,7 @@ public class PlayerBuildUnits : MonoBehaviour
     private PlayerController playerController;
 
     /// <summary>
-    /// Tmp hack
+    /// UnitSpawnInfo generator to be separated after testing.
     /// </summary>
     [SerializeField]
     private GameObject projBase;
@@ -52,10 +52,10 @@ public class PlayerBuildUnits : MonoBehaviour
         spwn1 = new UnitSpawnInfo();
         spwn1.maxHealth = 50;
         spwn1.maxShield = 0;
-        spwn1.attackDamage = 5;
-        spwn1.attackCooldown = 1;
+        spwn1.attackDamage = 7;
+        spwn1.attackCooldown = 1.5f;
         spwn1.projectileBase = projBase;
-        spwn1.range = 4;
+        spwn1.range = 2;
         spwn1.teamToTarget = Team.black;
         spwn1.cost = 15;
         spwn1.dataCost = 0;
@@ -64,14 +64,14 @@ public class PlayerBuildUnits : MonoBehaviour
 
         // hardcoded for testing: Healer.
         spwn2 = new UnitSpawnInfo();
-        spwn2.maxHealth = 50;
+        spwn2.maxHealth = 25;
         spwn2.maxShield = 0;
-        spwn2.attackDamage = 5;
+        spwn2.attackDamage = 2;
         spwn2.attackCooldown = 1;
         spwn2.projectileBase = projBase;
-        spwn2.range = 4;
+        spwn2.range = 3;
         spwn2.teamToTarget = Team.black;
-        spwn2.cost = 5;
+        spwn2.cost = 10;
         spwn2.dataCost = 1;
         spwn2.team = Team.white;
         spwn2.sprite = unit2Sprite;
@@ -79,14 +79,14 @@ public class PlayerBuildUnits : MonoBehaviour
 
         // hardcoded for testing: Gnome.
         spwn3 = new UnitSpawnInfo();
-        spwn3.maxHealth = 50;
+        spwn3.maxHealth = 20;
         spwn3.maxShield = 0;
-        spwn3.attackDamage = 5;
-        spwn3.attackCooldown = 1;
+        spwn3.attackDamage = 12;
+        spwn3.attackCooldown = 2;
         spwn3.projectileBase = projBase;
-        spwn3.range = 4;
+        spwn3.range = 5;
         spwn3.teamToTarget = Team.black;
-        spwn3.cost = 5;
+        spwn3.cost = 15;
         spwn3.dataCost = 1;
         spwn3.team = Team.white;
         spwn3.sprite = unit3Sprite;
@@ -95,7 +95,6 @@ public class PlayerBuildUnits : MonoBehaviour
 
     private void Update()
     {
-
         if (playerController.GetDeployed()) { DoInput(); }
     }
 
@@ -149,9 +148,10 @@ public class PlayerBuildUnits : MonoBehaviour
             return false;
         }
     }
+
+    // Extractors not currently in use.
     private bool SpawnExtractor(Vector3 position)
     {
-
         Vector2Int spawnTarget = VectorTools.GetClosestTileCoordinatesV2Int(position);
         Debug.Log("spawning at " + spawnTarget);
 

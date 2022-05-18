@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
 [RequireComponent(typeof(Unit))]
 public class Extractor : MonoBehaviour
 {

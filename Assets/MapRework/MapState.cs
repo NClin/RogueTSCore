@@ -16,7 +16,7 @@ public class MapState : MonoBehaviour
 
 
     private LineOfSight lineOfSight;
-    private TiledTexturesCreateIndexTexture TileTypeIndexTextureCreator;
+    private TileMapIndexTexture tileTypeIndexTexture;
     private PathfindingHandler pathfindingHandler;
 
     /// <summary>
@@ -30,23 +30,15 @@ public class MapState : MonoBehaviour
         resourcesMap = new ResourcesMap(mapToSet.Height(), mapToSet.Width());
         lineOfSight = FindObjectOfType<LineOfSight>();
         lineOfSight.InitializeLoS(mapToSet.Height(), mapToSet.Width());
-        TileTypeIndexTextureCreator.GenerateFromTileTypeMap(mapToSet);
+        tileTypeIndexTexture.GenerateFromTileTypeMap(mapToSet);
         pathfindingHandler.UpdateAllTiles(mapToSet);
     }
 
+
     private void Start()
     {
-        TileTypeIndexTextureCreator = FindObjectOfType<TiledTexturesCreateIndexTexture>();
+        tileTypeIndexTexture = FindObjectOfType<TileMapIndexTexture>();
         pathfindingHandler = FindObjectOfType<PathfindingHandler>();
     }
-
-    public bool IsTileOpen(Vector2Int tile)
-    {
-        if (unitMap.IsUnitAt(tile) || tileTypeMap.GetTileType(tile) != TileType.empty)
-            return false;
-        else
-            return true;
-    }
-
 
 }

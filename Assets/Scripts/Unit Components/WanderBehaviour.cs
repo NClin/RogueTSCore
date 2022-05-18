@@ -5,7 +5,7 @@ using UnityEngine;
 public class WanderBehaviour : MonoBehaviour
 {
 
-    private Movement movement;
+    private MovementStripped movement;
     [SerializeField]
     private float cooldown = 3;
 
@@ -15,7 +15,7 @@ public class WanderBehaviour : MonoBehaviour
 
     void Start()
     {
-        movement = GetComponentInParent<Movement>();
+        movement = GetComponentInParent<MovementStripped>();
     }
 
     void Update()

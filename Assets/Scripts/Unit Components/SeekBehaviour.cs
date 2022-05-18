@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#nullable enable
 public class SeekBehaviour : MonoBehaviour
 {
 
@@ -12,6 +13,7 @@ public class SeekBehaviour : MonoBehaviour
     [SerializeField]
     private Team seekTeam;
 
+
     private GameObject? seekTarget;
 
     [SerializeField]
@@ -20,12 +22,12 @@ public class SeekBehaviour : MonoBehaviour
     private bool scanRunning;
     private float scanFrequency = 1;
 
-    private Movement movement;
+    private MovementStripped movement;
     private bool initialized;
 
     private void Start()
     {
-        movement = GetComponentInParent<Movement>();
+        movement = GetComponentInParent<MovementStripped>();
         if (movement == null)
         {
             Debug.LogError("Could not find movement component in parent");

@@ -4,6 +4,8 @@ using UnityEngine;
 using Shapes;
 using Pathfinding;
 
+#nullable enable
+
 /// <summary>
 /// Selects and deselects selectable units based on input.
 /// </summary>
@@ -260,9 +262,9 @@ public class SelectionManager : MonoBehaviour
             {
                 foreach (SelectableUnit unit in selectedUnits)
                 {
-                    if (unit.GetComponent<MovementUpdated>())
+                    if (unit.GetComponent<MovementStripped>())
                     {
-                        unit.GetComponent<MovementUpdated>().StopOrder();
+                        unit.GetComponent<MovementStripped>().StopOrder();
                     }
                 }
             }

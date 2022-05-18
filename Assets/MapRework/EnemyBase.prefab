@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 4535901051188658683}
   - component: {fileID: 4535901051188658682}
   - component: {fileID: 4535901051188658685}
+  - component: {fileID: 76899838757565898}
   m_Layer: 0
   m_Name: EnemyBase
   m_TagString: Untagged
@@ -185,11 +186,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -442433907
-  m_SortingLayer: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c51922bf061258e4cbbdd83493eab6fa, type: 3}
-  m_Color: {r: 0.4807405, g: 0.6037736, b: 0.56730235, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f3fc481b15649bd44ad80861ecef264c, type: 3}
+  m_Color: {r: 0.8679245, g: 0.289854, b: 0.289854, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -339,6 +340,19 @@ MonoBehaviour:
   toTarget: 1
   targetingMode: 1
   targetingRange: 3
+--- !u!114 &76899838757565898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749048866953582595}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae92f57c6aa8104c96c268dfa5ef6f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultParentName: Units
 --- !u!1001 &1820092215214523482
 PrefabInstance:
   m_ObjectHideFlags: 0

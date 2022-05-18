@@ -6,6 +6,8 @@ public class UnitFactory : MonoBehaviour
 {
     [SerializeField]
     private GameObject unitBase;
+    [SerializeField]
+    private GameObject powerReadyIndicator;
 
     /// <summary>
     /// Use this only after the spawn has been validated.
@@ -23,7 +25,9 @@ public class UnitFactory : MonoBehaviour
         toSpawnUnit.SetSpawnValues(spwnInfo.maxHealth, spwnInfo.maxShield);
         toSpawnUnit.GetComponent<SpriteRenderer>().sprite = spwnInfo.sprite;
 
-        if (selectable) toSpawn.AddComponent<SelectableUnit>();
+        if (selectable) { 
+            toSpawn.AddComponent<SelectableUnit>(); 
+        }
 
         if (spwnInfo.range != 0)
         {
@@ -41,7 +45,9 @@ public class UnitFactory : MonoBehaviour
         if (spwnInfo.power != null)
         {
             var powerModule = toSpawn.AddComponent<UnitPower>();
-            powerModule.SetPower(spwnInfo.power);
+            var powerInstance = spwnInfo.power.Clone();
+            powerModule.SetPower(powerInstance);
+            Instantiate(powerReadyIndicator, toSpawn.transform);
         }
 
         return toSpawn;
